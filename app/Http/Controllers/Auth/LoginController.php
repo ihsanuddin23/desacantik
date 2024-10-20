@@ -10,14 +10,16 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         if (Auth::check()) {
             return redirect()->route("dashboard.home");
         }
         return view("auth.login");
     }
 
-    public function login(Request $request) {
+    public function login(Request $request)
+    {
         if (Auth::check()) {
             return redirect()->route("dashboard.home");
         }

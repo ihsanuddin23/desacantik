@@ -60,7 +60,7 @@ Route::name("frontend.")->group(function () {
     Route::get('/identitasrt', [FrontendIdentitasRtController::class, 'index'])->name('identitasrt');
 });
 
-Route::name("auth")->group(function () {
+Route::name("auth.")->group(function () {
     Route::get("/signup", [SignupController::class, "index"])->name("signup");
     Route::post("/signup", [SignupController::class, "signup"])->name("signup.submit");
     Route::get("/login", [LoginController::class, "index"])->name("login");
