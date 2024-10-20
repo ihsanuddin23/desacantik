@@ -371,53 +371,53 @@
             </div>
 
 
-            <div class="card login-card article-list-card">
-              <div class="row no-gutters">
-                <div class="col-md-6 col-xs-5">
-                  <a href="https://cikedokan.sidepe.com/berita/detail/berita/pemberian-penghargaan-pbb-p2">
-                    <img src="https://cikedokan.sidepe.com/timthumb.php?src=https://cikedokan.sidepe.com/desa/upload/artikel/sedang_1701477542_penghargaan PBB.jpeg&w=600&h=350&q=100" class="img-responsive img-article-list" alt="PEMBERIAN PENGHARGAAN PBB-P2">
-                  </a>
-                </div>
-                <div class="col-md-6 col-xs-7">
-                  <div class="row">
-                    <div class="top-block-article-list">
-                      <div class="brand-wrapper article-list-title">
-                        <a href="https://cikedokan.sidepe.com/berita/detail/berita/pemberian-penghargaan-pbb-p2">
-                          PEMBERIAN PENGHARGAAN PBB-P2 </a>
-                      </div>
-                      <div class="top-meta-article-list">
-                        <div class="row">
-                          <div class="col-md-8 col-xs-12">
-                            <div class="post-date">
-                              <i class="ti-calendar"></i> Sabtu, 02 Desember 2023 07:38:52
+            @foreach ($recentposts as $key => $post)
+              <div class="card login-card article-list-card">
+                <div class="row no-gutters">
+                  <div class="col-md-6 col-xs-5">
+                    <a href="{{ route('frontend.post', $post->slug) }}">
+                      <img src="{{ asset('uploads/post/' . $post->thumbnail) }}" class="img-responsive img-article-list" alt="{{ $post->title }}" style="object-fit: cover;">
+                    </a>
+                  </div>
+                  <div class="col-md-6 col-xs-7">
+                    <div class="row">
+                      <div class="top-block-article-list">
+                        <div class="brand-wrapper article-list-title">
+                          <a href="{{ route('frontend.post', $post->slug) }}"> {{ $post->title }} </a>
+                        </div>
+                        <div class="top-meta-article-list">
+                          <div class="row">
+                            <div class="col-md-8 col-xs-12">
+                              <div class="post-date">
+                                <i class="ti-calendar"></i> {{ $post->created_at->format('d M Y') }}
+                              </div>
                             </div>
-                          </div>
-                          <div class="col-md-4 col-xs-4 hidden-xs">
-                            <div class="post-hit">
-                              <i class="ti-eye"></i> 58 Dibaca
+                            <div class="col-md-4 col-xs-4 hidden-xs">
+                              <div class="post-hit">
+                                <i class="ti-eye"></i> {{ $post->views }}
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div class="card-body artice-list-body hidden-xs">
-                      <p class="description-artice-list">
-                        Desa CIKEDOKAN Pajak Adalah Merupakan Salah Satu Andalan Bagi Pendapatan Asli Daerah (PAD). Berapapun Nominal-nya Yang Disetorkan Para Wajib Pajak, Menjadikan Kas Pemkab Bisa Didistribusikan Untuk Program-program Yang Menyentuh Berbagai Sendi Kehidupan Warganya. Hasil Dari Pengumpulan&#8230; </p>
-                    </div>
+                      <div class="card-body artice-list-body hidden-xs">
+                        <p class="description-artice-list">{{ Str::limit($post->excerpt, 100) }}</p>
+                      </div>
 
-                    <div class="bottom-block-article-list hidden-xs">
-                      <div class="bottom-meta-article-list">
-                        <div class="row">
-                          <div class="col-md-6 col-xs-5">
-                            <div class="post-owner">
-                              <i class="ti-user"></i> Pemdes Cikedokan
+                      <div class="bottom-block-article-list hidden-xs">
+                        <div class="bottom-meta-article-list">
+                          <div class="row">
+                            <div class="col-md-6 col-xs-5">
+                              <div class="post-owner">
+                                <i class="ti-user"></i> Admin
+                              </div>
                             </div>
-                          </div>
-                          <div class="col-md-6 col-xs-">
-                            <div class="post-cat">
-                              <i class="ti-agenda"></i>
-                              <a href="https://cikedokan.sidepe.com/berita/kategori/berita" class="cat-label">Berita</a>
+                            <div class="col-md-6 col-xs-">
+                              <div class="post-cat">
+                                <i class="ti-agenda"></i>
+                                <a href="{{ route('frontend.category', $post->category->slug) }}" class="cat-label">{{ $post->category->name }}</a>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -426,399 +426,7 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="card login-card article-list-card">
-              <div class="row no-gutters">
-                <div class="col-md-6 col-xs-5">
-                  <a href="https://cikedokan.sidepe.com/berita/detail/berita/desa-cikedokan-juga-berhasil-meraih-penghargaan-sebagai-transformasi-digital-pemerintah-desa-terbai">
-                    <img src="https://cikedokan.sidepe.com/timthumb.php?src=https://cikedokan.sidepe.com/desa/upload/artikel/sedang_1700181562_WhatsApp Image 2023-11-16 at 20.18.48.jpg&w=600&h=350&q=100" class="img-responsive img-article-list" alt="Desa CiKEDOKAN juga berhasil meraih penghargaan sebagai Transformasi Digital Pemerintah Desa Terbai">
-                  </a>
-                </div>
-                <div class="col-md-6 col-xs-7">
-                  <div class="row">
-                    <div class="top-block-article-list">
-                      <div class="brand-wrapper article-list-title">
-                        <a href="https://cikedokan.sidepe.com/berita/detail/berita/desa-cikedokan-juga-berhasil-meraih-penghargaan-sebagai-transformasi-digital-pemerintah-desa-terbai">
-                          Desa CiKEDOKAN Juga Berhasil Meraih&#8230; </a>
-                      </div>
-                      <div class="top-meta-article-list">
-                        <div class="row">
-                          <div class="col-md-8 col-xs-12">
-                            <div class="post-date">
-                              <i class="ti-calendar"></i> Jumat, 17 November 2023 07:38:59
-                            </div>
-                          </div>
-                          <div class="col-md-4 col-xs-4 hidden-xs">
-                            <div class="post-hit">
-                              <i class="ti-eye"></i> 53 Dibaca
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="card-body artice-list-body hidden-xs">
-                      <p class="description-artice-list">
-                        SEMARANG - Pemerintah Kabupaten Bekasi Melalui Dinas Komunikasi Informatika Persandian Dan Statistik (Diskominfosantik) Menerima Penghargaan Dari Kementerian Komunikasi Dan Informatika Republik Indonesia, Dalam Ajang Festival TIK 2023, Yang Digelar Di Kota Semarang, Jawa Tengah,&#8230; </p>
-                    </div>
-
-                    <div class="bottom-block-article-list hidden-xs">
-                      <div class="bottom-meta-article-list">
-                        <div class="row">
-                          <div class="col-md-6 col-xs-5">
-                            <div class="post-owner">
-                              <i class="ti-user"></i> Pemdes Cikedokan
-                            </div>
-                          </div>
-                          <div class="col-md-6 col-xs-">
-                            <div class="post-cat">
-                              <i class="ti-agenda"></i>
-                              <a href="https://cikedokan.sidepe.com/berita/kategori/berita" class="cat-label">Berita</a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card login-card article-list-card">
-              <div class="row no-gutters">
-                <div class="col-md-6 col-xs-5">
-                  <a href="https://cikedokan.sidepe.com/berita/detail/berita/launching-kampung-bersih">
-                    <img src="https://cikedokan.sidepe.com/timthumb.php?src=https://cikedokan.sidepe.com/desa/upload/artikel/sedang_1693399564_IMG_20230813_094734.jpg&w=600&h=350&q=100" class="img-responsive img-article-list" alt="LAUNCHING KAMPUNG BERSIH">
-                  </a>
-                </div>
-                <div class="col-md-6 col-xs-7">
-                  <div class="row">
-                    <div class="top-block-article-list">
-                      <div class="brand-wrapper article-list-title">
-                        <a href="https://cikedokan.sidepe.com/berita/detail/berita/launching-kampung-bersih">
-                          LAUNCHING KAMPUNG BERSIH </a>
-                      </div>
-                      <div class="top-meta-article-list">
-                        <div class="row">
-                          <div class="col-md-8 col-xs-12">
-                            <div class="post-date">
-                              <i class="ti-calendar"></i> Rabu, 30 Agustus 2023 19:45:27
-                            </div>
-                          </div>
-                          <div class="col-md-4 col-xs-4 hidden-xs">
-                            <div class="post-hit">
-                              <i class="ti-eye"></i> 37 Dibaca
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="card-body artice-list-body hidden-xs">
-                      <p class="description-artice-list">
-                        LAUNCHING KAMPUNG BERSIH Wujud Keperdulian Bersama Dalam Menjaga Kebersihan Lingkungan Dengan Semangat Gotong Royong. Kerja Bakti Yang Dikemas Dalam àSABER  (SABTU BERSIH) Di Kampung Kamurang Desa Cukedokan Kecamatan Cikarang Barat - Bekasi, Sabtu ( 13/08/2023). Mereka Bahu Membahu&#8230; </p>
-                    </div>
-
-                    <div class="bottom-block-article-list hidden-xs">
-                      <div class="bottom-meta-article-list">
-                        <div class="row">
-                          <div class="col-md-6 col-xs-5">
-                            <div class="post-owner">
-                              <i class="ti-user"></i> Pemdes Cikedokan
-                            </div>
-                          </div>
-                          <div class="col-md-6 col-xs-">
-                            <div class="post-cat">
-                              <i class="ti-agenda"></i>
-                              <a href="https://cikedokan.sidepe.com/berita/kategori/berita" class="cat-label">Berita</a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card login-card article-list-card">
-              <div class="row no-gutters">
-                <div class="col-md-6 col-xs-5">
-                  <a href="https://cikedokan.sidepe.com/berita/detail/berita/launching-kampung-bersih">
-                    <img src="https://cikedokan.sidepe.com/timthumb.php?src=https://cikedokan.sidepe.com/desa/upload/artikel/sedang_1693399586_IMG_20230813_094734.jpg&w=600&h=350&q=100" class="img-responsive img-article-list" alt="LAUNCHING KAMPUNG BERSIH">
-                  </a>
-                </div>
-                <div class="col-md-6 col-xs-7">
-                  <div class="row">
-                    <div class="top-block-article-list">
-                      <div class="brand-wrapper article-list-title">
-                        <a href="https://cikedokan.sidepe.com/berita/detail/berita/launching-kampung-bersih">
-                          LAUNCHING KAMPUNG BERSIH </a>
-                      </div>
-                      <div class="top-meta-article-list">
-                        <div class="row">
-                          <div class="col-md-8 col-xs-12">
-                            <div class="post-date">
-                              <i class="ti-calendar"></i> Rabu, 30 Agustus 2023 19:45:27
-                            </div>
-                          </div>
-                          <div class="col-md-4 col-xs-4 hidden-xs">
-                            <div class="post-hit">
-                              <i class="ti-eye"></i> 0 Dibaca
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="card-body artice-list-body hidden-xs">
-                      <p class="description-artice-list">
-                        LAUNCHING KAMPUNG BERSIH Wujud Keperdulian Bersama Dalam Menjaga Kebersihan Lingkungan Dengan Semangat Gotong Royong. Kerja Bakti Yang Dikemas Dalam àSABER  (SABTU BERSIH) Di Kampung Kamurang Desa Cukedokan Kecamatan Cikarang Barat - Bekasi, Sabtu ( 13/08/2023). Mereka Bahu Membahu&#8230; </p>
-                    </div>
-
-                    <div class="bottom-block-article-list hidden-xs">
-                      <div class="bottom-meta-article-list">
-                        <div class="row">
-                          <div class="col-md-6 col-xs-5">
-                            <div class="post-owner">
-                              <i class="ti-user"></i> Pemdes Cikedokan
-                            </div>
-                          </div>
-                          <div class="col-md-6 col-xs-">
-                            <div class="post-cat">
-                              <i class="ti-agenda"></i>
-                              <a href="https://cikedokan.sidepe.com/berita/kategori/berita" class="cat-label">Berita</a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card login-card article-list-card">
-              <div class="row no-gutters">
-                <div class="col-md-6 col-xs-5">
-                  <a href="https://cikedokan.sidepe.com/berita/detail/berita/gebyar-satu-muharam-1445h">
-                    <img src="https://cikedokan.sidepe.com/timthumb.php?src=https://cikedokan.sidepe.com/desa/upload/artikel/sedang_1692593090_Kompres 1.jpg&w=600&h=350&q=100" class="img-responsive img-article-list" alt="GEBYAR SATU MUHARAM 1445H">
-                  </a>
-                </div>
-                <div class="col-md-6 col-xs-7">
-                  <div class="row">
-                    <div class="top-block-article-list">
-                      <div class="brand-wrapper article-list-title">
-                        <a href="https://cikedokan.sidepe.com/berita/detail/berita/gebyar-satu-muharam-1445h">
-                          GEBYAR SATU MUHARAM 1445H </a>
-                      </div>
-                      <div class="top-meta-article-list">
-                        <div class="row">
-                          <div class="col-md-8 col-xs-12">
-                            <div class="post-date">
-                              <i class="ti-calendar"></i> Senin, 21 Agustus 2023 11:27:02
-                            </div>
-                          </div>
-                          <div class="col-md-4 col-xs-4 hidden-xs">
-                            <div class="post-hit">
-                              <i class="ti-eye"></i> 34 Dibaca
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="card-body artice-list-body hidden-xs">
-                      <p class="description-artice-list">
-                        Kepala Desa Cikedokan (Bpk H. Gorin Santoso) Akan Menggelar Gebyar Muharram 1445 Hijriah. Merawat Kerukunan Dan Kebersamaan Perkokoh Tali Silahturahmi. Gelaran Tersebut Berlangsung Di Halaman Kantor Desa Cikedokan.(19 – Juli  2023). Bapak Kepala Desa Cikedokan Menyampaikan Ada Berbagai&#8230; </p>
-                    </div>
-
-                    <div class="bottom-block-article-list hidden-xs">
-                      <div class="bottom-meta-article-list">
-                        <div class="row">
-                          <div class="col-md-6 col-xs-5">
-                            <div class="post-owner">
-                              <i class="ti-user"></i> Pemdes Cikedokan
-                            </div>
-                          </div>
-                          <div class="col-md-6 col-xs-">
-                            <div class="post-cat">
-                              <i class="ti-agenda"></i>
-                              <a href="https://cikedokan.sidepe.com/berita/kategori/berita" class="cat-label">Berita</a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card login-card article-list-card">
-              <div class="row no-gutters">
-                <div class="col-md-6 col-xs-5">
-                  <a href="https://cikedokan.sidepe.com/berita/detail/berita/gebyar-bedug-cikedokan">
-                    <img src="https://cikedokan.sidepe.com/timthumb.php?src=https://cikedokan.sidepe.com/desa/upload/artikel/sedang_1683680301_bedung gb3.jpeg&w=600&h=350&q=100" class="img-responsive img-article-list" alt="GEBYAR BEDUG CIKEDOKAN">
-                  </a>
-                </div>
-                <div class="col-md-6 col-xs-7">
-                  <div class="row">
-                    <div class="top-block-article-list">
-                      <div class="brand-wrapper article-list-title">
-                        <a href="https://cikedokan.sidepe.com/berita/detail/berita/gebyar-bedug-cikedokan">
-                          GEBYAR BEDUG CIKEDOKAN </a>
-                      </div>
-                      <div class="top-meta-article-list">
-                        <div class="row">
-                          <div class="col-md-8 col-xs-12">
-                            <div class="post-date">
-                              <i class="ti-calendar"></i> Rabu, 10 Mei 2023 07:13:23
-                            </div>
-                          </div>
-                          <div class="col-md-4 col-xs-4 hidden-xs">
-                            <div class="post-hit">
-                              <i class="ti-eye"></i> 48 Dibaca
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="card-body artice-list-body hidden-xs">
-                      <p class="description-artice-list">
-                        GEBYAR BEDUG TAHUNAN Tahun Ini, Kembali Hadir Acara "Gebyar Bedug" Yang Pasti Akan Membuat Semangat Dan Kegembiraan Anda Memuncak! Ayo Hadir Dan Bergabung Dalam "Gebyar Bedug" Tahunan Di Cikedokan! Acara Ini Selalu Dinanti-nanti Dan Pastinya Akan Memberikan Pengalaman Yang Tak Terlupakan&#8230; </p>
-                    </div>
-
-                    <div class="bottom-block-article-list hidden-xs">
-                      <div class="bottom-meta-article-list">
-                        <div class="row">
-                          <div class="col-md-6 col-xs-5">
-                            <div class="post-owner">
-                              <i class="ti-user"></i> Pemdes Cikedokan
-                            </div>
-                          </div>
-                          <div class="col-md-6 col-xs-">
-                            <div class="post-cat">
-                              <i class="ti-agenda"></i>
-                              <a href="https://cikedokan.sidepe.com/berita/kategori/berita" class="cat-label">Berita</a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card login-card article-list-card">
-              <div class="row no-gutters">
-                <div class="col-md-6 col-xs-5">
-                  <a href="https://cikedokan.sidepe.com/berita/detail/berita/peduli-gempa-cianjur">
-                    <img src="https://cikedokan.sidepe.com/timthumb.php?src=https://cikedokan.sidepe.com/desa/upload/artikel/sedang_1683676042_1.jpg&w=600&h=350&q=100" class="img-responsive img-article-list" alt="PEDULI GEMPA CIANJUR">
-                  </a>
-                </div>
-                <div class="col-md-6 col-xs-7">
-                  <div class="row">
-                    <div class="top-block-article-list">
-                      <div class="brand-wrapper article-list-title">
-                        <a href="https://cikedokan.sidepe.com/berita/detail/berita/peduli-gempa-cianjur">
-                          PEDULI GEMPA CIANJUR </a>
-                      </div>
-                      <div class="top-meta-article-list">
-                        <div class="row">
-                          <div class="col-md-8 col-xs-12">
-                            <div class="post-date">
-                              <i class="ti-calendar"></i> Rabu, 10 Mei 2023 06:47:15
-                            </div>
-                          </div>
-                          <div class="col-md-4 col-xs-4 hidden-xs">
-                            <div class="post-hit">
-                              <i class="ti-eye"></i> 39 Dibaca
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="card-body artice-list-body hidden-xs">
-                      <p class="description-artice-list">
-                        GEMPA CIANJUR Kami Selaku PEMERINTAH DESA CIKEDOKAN Merasa Sangat Prihatin Dan Berduka Atas Dampak Yang Ditimbulkan Oleh Gempa Di Cianjur Ini. Semoga Masyarakat Cianjur Selalu Berada Dalam Perlindungan Tuhan Dan Diberikan Kekuatan Untuk Menghadapi Situasi Ini. Gempa Ini Telah Menyebabkan&#8230; </p>
-                    </div>
-
-                    <div class="bottom-block-article-list hidden-xs">
-                      <div class="bottom-meta-article-list">
-                        <div class="row">
-                          <div class="col-md-6 col-xs-5">
-                            <div class="post-owner">
-                              <i class="ti-user"></i> Pemdes Cikedokan
-                            </div>
-                          </div>
-                          <div class="col-md-6 col-xs-">
-                            <div class="post-cat">
-                              <i class="ti-agenda"></i>
-                              <a href="https://cikedokan.sidepe.com/berita/kategori/berita" class="cat-label">Berita</a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card login-card article-list-card">
-              <div class="row no-gutters">
-                <div class="col-md-6 col-xs-5">
-                  <a href="https://cikedokan.sidepe.com/berita/detail/berita/penghargaan-juara-1-pbb-tingkat-kecamatan-pajak-bumi-dan-bangunan-th-2022">
-                    <img src="https://cikedokan.sidepe.com/timthumb.php?src=https://cikedokan.sidepe.com/desa/upload/artikel/sedang_1683640369_pajak 1.jpeg&w=600&h=350&q=100" class="img-responsive img-article-list" alt="PENGHARGAAN JUARA 1 PBB TINGKAT KECAMATAN (Pajak Bumi dan Bangunan) Th 2022">
-                  </a>
-                </div>
-                <div class="col-md-6 col-xs-7">
-                  <div class="row">
-                    <div class="top-block-article-list">
-                      <div class="brand-wrapper article-list-title">
-                        <a href="https://cikedokan.sidepe.com/berita/detail/berita/penghargaan-juara-1-pbb-tingkat-kecamatan-pajak-bumi-dan-bangunan-th-2022">
-                          PENGHARGAAN JUARA 1 PBB TINGKAT KECAMATAN&#8230; </a>
-                      </div>
-                      <div class="top-meta-article-list">
-                        <div class="row">
-                          <div class="col-md-8 col-xs-12">
-                            <div class="post-date">
-                              <i class="ti-calendar"></i> Selasa, 09 Mei 2023 20:52:44
-                            </div>
-                          </div>
-                          <div class="col-md-4 col-xs-4 hidden-xs">
-                            <div class="post-hit">
-                              <i class="ti-eye"></i> 59 Dibaca
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="card-body artice-list-body hidden-xs">
-                      <p class="description-artice-list">
-                        Desa Cikedokan Merasa Sangat Terhormat Untuk Menerima Penghargaan Ini Sebagai Juara Ke-1 Dalam Hal Pajak Di Tingkat Kecamatan. Terima Kasih Banyak Kepada Seluruh Tim Dan Pihak-pihak Terkait Yang Telah Memberikan Dukungan Dan Bantuan Kepada Pemerintah Desa Cikedokan. Kami Selaku Pemerintah&#8230; </p>
-                    </div>
-
-                    <div class="bottom-block-article-list hidden-xs">
-                      <div class="bottom-meta-article-list">
-                        <div class="row">
-                          <div class="col-md-6 col-xs-5">
-                            <div class="post-owner">
-                              <i class="ti-user"></i> Pemdes Cikedokan
-                            </div>
-                          </div>
-                          <div class="col-md-6 col-xs-">
-                            <div class="post-cat">
-                              <i class="ti-agenda"></i>
-                              <a href="https://cikedokan.sidepe.com/berita/kategori/berita" class="cat-label">Berita</a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            @endforeach
 
             <div class="clearfix"></div>
 
