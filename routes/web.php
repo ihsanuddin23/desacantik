@@ -25,8 +25,9 @@ use App\Http\Controllers\Dashboard\KependudukanController;
 use App\Http\Controllers\Dashboard\PemerintahController;
 use App\Http\Controllers\Dashboard\UsahaController;
 use App\Http\Controllers\Dashboard\PendidikanController;
+use App\Http\Controllers\Dashboard\PendidikanRtController;
 use App\Http\Controllers\Dashboard\SaranaUsahaController;
-
+use App\Http\Controllers\Frontend\BeritaController;
 use App\Http\Controllers\Frontend\CategoryController;
 use App\Http\Controllers\Frontend\CommentController;
 use App\Http\Controllers\Frontend\DaftarPemerintahController;
@@ -37,7 +38,9 @@ use App\Http\Controllers\Frontend\SearchController;
 use App\Http\Controllers\Frontend\TagController;
 use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\Frontend\DemografiController;
+use App\Http\Controllers\Frontend\DemografiRtController;
 use App\Http\Controllers\Frontend\IdentitasRtController as FrontendIdentitasRtController;
+use App\Http\Controllers\Frontend\PendidikanRtController as FrontendPendidikanRtController;
 use App\Http\Controllers\Frontend\SejarahController;
 use App\Http\Controllers\Frontend\VisiMisiController;
 use Illuminate\Support\Facades\Route;
@@ -58,6 +61,9 @@ Route::name("frontend.")->group(function () {
     Route::get('/sejarah', [SejarahController::class, 'index'])->name('sejarah');
     Route::get('/pemerintahdesa', [DaftarPemerintahController::class, 'index'])->name('pemerintah');
     Route::get('/identitasrt', [FrontendIdentitasRtController::class, 'index'])->name('identitasrt');
+    Route::get('/berita', [BeritaController::class, 'index'])->name('berita');
+    Route::get('/demografirt', [DemografiRtController::class, 'index'])->name('demografirt');
+    Route::get('/pendidikanrt', [FrontendPendidikanRtController::class, 'index'])->name('pendidikanrt');
 });
 
 Route::name("auth.")->group(function () {
@@ -99,6 +105,8 @@ Route::name("dashboard.")->prefix("/dashboard")->middleware(["auth"])->group(fun
     Route::resource("/saranausaha", SaranaUsahaController::class);
     // Identitas Rt
     Route::resource("/identitasrt", IdentitasRtController::class);
+    // Pendidikan Rt
+    Route::resource("/pendidikanrt", PendidikanRtController::class);
     // Pemerintah
     Route::resource("/pemerintah", PemerintahController::class);
 

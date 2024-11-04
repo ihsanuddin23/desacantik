@@ -64,6 +64,11 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label for="jumlah_kk">Jumlah KK</label>
+                                        <input type="number" class="form-control" id="jumlah_kk" name="jumlah_kk">
+                                    </div>
+
+                                    <div class="form-group">
                                         <label for="tanggal_lahir_ketua_rt">Tanggal Lahir Ketua RT</label>
                                         <input type="date" class="form-control" id="tanggal_lahir_ketua_rt"
                                             name="tanggal_lahir_ketua_rt">

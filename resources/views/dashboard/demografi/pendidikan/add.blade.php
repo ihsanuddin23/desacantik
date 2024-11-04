@@ -49,9 +49,10 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="nama_pendidikan">Nama Pendidikan</label>
-                                        <input type="text" class="form-control" id="nama_pendidikan"
-                                            name="nama_pendidikan">
+                                        <textarea class="form-control" id="nama_pendidikan" name="nama_pendidikan" rows="3">
+                                    </textarea>
                                     </div>
+
                                     <div class="form-group">
                                         <label for="jumlah_volume_pendidikan">Jumlah/Volume (m2)</label>
                                         <input type="number" class="form-control" id="jumlah_volume_pendidikan"

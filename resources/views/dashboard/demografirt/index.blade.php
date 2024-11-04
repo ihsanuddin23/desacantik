@@ -21,7 +21,7 @@
 
         {{-- Identitas RT --}}
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 ml-2"> <!-- Menambahkan ml-2 untuk memberi jarak -->
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Daftar Identitas RT</h3>
@@ -33,7 +33,7 @@
 
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered table-sm">
                                 <thead>
                                     <tr>
                                         <th class="text-center">No</th>
@@ -41,10 +41,8 @@
                                         <th class="text-center">Nomor RW</th>
                                         <th class="text-center">Dusun</th>
                                         <th class="text-center">Nama Ketua RT</th>
-                                        <th class="text-center">Tanggal Lahir Ketua RT</th>
-                                        <th class="text-center">Pendidikan Ketua RT</th>
-                                        <th class="text-center">Pekerjaan Ketua RT</th>
-                                        <th class="text-center">Nomor Telepon Ketua RT</th>
+                                        <th class="text-center">Jumlah KK</th>
+
                                         <th class="text-center">Actions</th>
                                     </tr>
                                 </thead>
@@ -58,16 +56,12 @@
                                             <td>{{ $identitas->nomor_rw }}</td>
                                             <td>{{ $identitas->dusun }}</td>
                                             <td>{{ $identitas->nama_ketua_rt }}</td>
-                                            <td>
-                                                {{ $identitas->tanggal_lahir_ketua_rt ? \Carbon\Carbon::parse($identitas->tanggal_lahir_ketua_rt)->format('d M Y') : '-' }}
-                                            </td>
-
-                                            <td>{{ $identitas->pendidikan_ketua_rt }}</td>
-                                            <td>{{ $identitas->pekerjaan_ketua_rt }}</td>
-                                            <td>{{ $identitas->nomor_telepon_ketua_rt }}</td>
+                                            <td>{{ $identitas->jumlah_kk }}</td>
                                             <td class="text-center">
+                                                <a href="{{ route('dashboard.identitasrt.show', $identitas->id) }}"
+                                                    class="btn btn-info">Show</a>
                                                 <a href="{{ route('dashboard.identitasrt.edit', $identitas->id) }}"
-                                                    class="btn btn-warning my-2">Edit</a>
+                                                    class="btn btn-warning">Edit</a>
                                                 <form action="{{ route('dashboard.identitasrt.destroy', $identitas->id) }}"
                                                     method="POST" style="display:inline;">
                                                     @csrf
@@ -76,6 +70,7 @@
                                                         data-entity="Identitas RT">Delete</button>
                                                 </form>
                                             </td>
+
                                         </tr>
                                     @empty
                                         <tr>
@@ -90,6 +85,80 @@
                     <div class="card-footer clearfix">
                         <div class="float-right">
                             {{ $identitasrt->links() }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- Pendidikan RT --}}
+        <div class="row">
+            <div class="col-12 ml-2"> <!-- Menambahkan ml-2 untuk memberi jarak -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Daftar Pendidikan RT</h3>
+                        <div class="card-tools">
+                            <a href="{{ route('dashboard.pendidikanrt.create') }}" class="btn btn-primary">Add New
+                                Pendidikan RT</a>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">No</th>
+                                        <th class="text-center">Nomor RT</th>
+                                        <th class="text-center">Nomor RW</th>
+                                        <th class="text-center">Dusun</th>
+                                        <th class="text-center">Nama RT</th>
+                                        <th class="text-center">Jumlah Laki-laki</th>
+                                        <th class="text-center">Jumlah Perempuan</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse ($pendidikanrt as $index => $pendidikan)
+                                        <tr>
+                                            <td class="text-center">
+                                                {{ ($pendidikanrt->currentPage() - 1) * $pendidikanrt->perPage() + $loop->iteration }}
+                                            </td>
+                                            <td>{{ $pendidikan->identitasRt->nomor_rt ?? '-' }}</td>
+                                            <td>{{ $pendidikan->identitasRt->nomor_rw ?? '-' }}</td>
+                                            <td>{{ $pendidikan->identitasRt->dusun ?? '-' }}</td>
+                                            <td>{{ $pendidikan->identitasRt->nama_ketua_rt ?? '-' }}</td>
+                                            <td>{{ $pendidikan->laki_laki }}</td>
+                                            <td>{{ $pendidikan->perempuan }}</td>
+
+                                            <td class="text-center">
+                                                <a href="{{ route('dashboard.pendidikanrt.show', $pendidikan->id) }}"
+                                                    class="btn btn-info">Show</a>
+                                                <a href="{{ route('dashboard.pendidikanrt.edit', $pendidikan->id) }}"
+                                                    class="btn btn-warning">Edit</a>
+                                                <form
+                                                    action="{{ route('dashboard.pendidikanrt.destroy', $pendidikan->id) }}"
+                                                    method="POST" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger deletebtn"
+                                                        data-entity="Pendidikan RT">Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="10" class="text-center">Data Pendidikan RT Kosong!</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card-footer clearfix">
+                        <div class="float-right">
+                            {{ $pendidikanrt->links() }}
                         </div>
                     </div>
                 </div>

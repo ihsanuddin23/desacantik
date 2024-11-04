@@ -14,8 +14,8 @@ class CategoryController extends Controller
         $category = Category::where("slug", $slug)->where("status", true)->first();
         if ($category) {
             $str = Str::class;
-            $posts = $category->posts()->with(["category", "user"])->where("status", true)->orderBy("id", "DESC")->paginate(10);
-            return view("frontend.category.index", compact("category", "posts", "str"));
+            $posts = $category->posts()->with(["category", "user"])->where("status", true)->orderBy("id", "DESC")->paginate(6);
+            return view("frontend2.category.index", compact("category", "posts", "str"));
         }
         return abort(404);
     }

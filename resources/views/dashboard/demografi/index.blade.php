@@ -188,16 +188,29 @@
                                                         </ul>
                                                     </td>
                                                     <td>{{ $fasilitas->jumlah_volume_fasilitas_umum }}</td>
-                                                    <td>{{ $fasilitas->keterangan_fasilitas_umum }}</td>
+                                                    <td>
+                                                        <ul style="list-style-type: none; padding-left: 0;">
+                                                            @php
+                                                                $masjidArray = explode(
+                                                                    "\n",
+                                                                    $fasilitas->keterangan_fasilitas_umum,
+                                                                );
+                                                            @endphp
+                                                            @foreach ($masjidArray as $masjid)
+                                                                <li>{{ trim($masjid) }}</li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </td>
+
                                                     <td>
                                                         <a href="{{ route('dashboard.fasilitasumum.edit', $fasilitas->id) }}"
-                                                            class="btn btn-warning">Edit</a>
+                                                            class="btn btn-warning mb-1">Edit</a>
                                                         <form
                                                             action="{{ route('dashboard.fasilitasumum.destroy', $fasilitas->id) }}"
                                                             method="POST" style="display:inline;">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="btn btn-danger deletebtn"
+                                                            <button type="submit" class="btn btn-danger deletebtn mt-1"
                                                                 data-entity="Fasilitas Umum">Delete</button>
                                                         </form>
                                                     </td>
@@ -357,7 +370,19 @@
                                                 <tr>
                                                     <td class="text-center">{{ $index + 1 }}</td>
                                                     <td>{{ $pendidik->jenis_pendidikan }}</td>
-                                                    <td>{{ $pendidik->nama_pendidikan }}</td>
+                                                    <td class="bg-white text-dark">
+                                                        <ul style="list-style-type: none; padding-left: 0;">
+                                                            @php
+                                                                $pendidikArray = explode(
+                                                                    "\n",
+                                                                    $pendidik->nama_pendidikan,
+                                                                );
+                                                            @endphp
+                                                            @foreach ($pendidikArray as $pendidikandemografi)
+                                                                <li>{{ trim($pendidikandemografi) }}</li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </td>
                                                     <!-- Mengambil jumlah_volume dari model usaha -->
                                                     <td>{{ $pendidik->jumlah_volume_pendidikan }}</td>
                                                     <td>

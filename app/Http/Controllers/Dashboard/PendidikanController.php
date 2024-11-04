@@ -4,16 +4,23 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\IdentitasRt;
 use App\Models\Pendidikan;
 
 use Illuminate\Http\Request;
 
 class PendidikanController extends Controller
 {
+    public function getNamaKetuaRt($id)
+    {
+        $identitas = IdentitasRt::find($id);
+        return response()->json(['nama_ketua_rt' => $identitas->nama_ketua_rt]);
+    }
     public function create()
     {
+        $identitasRts = IdentitasRt::all();
         // Show the form for creating a new Kependudukan
-        return view('dashboard.demografi.pendidikan.add');
+        return view('dashboard.demografi.pendidikan.add', compact('identitasRts'));
     }
     public function store(Request $request)
     {

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Jalankan migrasi.
      */
     public function up(): void
     {
@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nomor_rw')->nullable();
             $table->string('dusun')->nullable();
             $table->string('nama_ketua_rt')->nullable();
+            $table->integer('jumlah_kk')->nullable();
             $table->date('tanggal_lahir_ketua_rt')->nullable();
             $table->string('pendidikan_ketua_rt')->nullable();
             $table->string('pekerjaan_ketua_rt')->nullable();
@@ -25,9 +26,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('identitasrt');

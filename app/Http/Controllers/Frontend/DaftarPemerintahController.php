@@ -21,7 +21,12 @@ class DaftarPemerintahController extends Controller
         // Fetch categories
         $categories = Category::where("status", true)->orderBy("title", "ASC")->limit(10)->get();
         $pemerintahdesa = Pemerintah::all();
+        $popularposts = Post::with("category")
+            ->where("status", true)
+            ->orderBy("views", "DESC") // Mengurutkan berdasarkan views terbanyak
+            ->limit(5) // Mengambil 5 artikel populer
+            ->get();
         // return view("frontend.pemerintahdesa.index", compact("recentposts", "featuredposts", "categories", "pemerintahdesa"));
-        return view("frontend2.pemerintahdesa.index", compact("recentposts", "featuredposts", "categories", "pemerintahdesa"));
+        return view("frontend2.pemerintahdesa.index", compact("popularposts", "recentposts", "featuredposts", "categories", "pemerintahdesa"));
     }
 }

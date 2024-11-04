@@ -8,6 +8,13 @@
         font: bold;
     }
 
+
+    .leaflet-control-layers-selector {
+        margin-right: 5px;
+        /* Menambahkan sedikit ruang antara checkbox/radio dan teks */
+    }
+
+
     #map_df102c497a9a7085b8d1bf85c6207283 {
         position: relative;
         width: 95%;
@@ -49,6 +56,18 @@
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     }
 </style>
+{{-- map --}}
+{{-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" /> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css" />
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css" />
+<link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/leaflet-search@2.9.7/dist/leaflet-search.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-search@2.9.7/dist/leaflet-search.min.css" />
+<!-- Quicksand Google Fonts -->
+<link rel="stylesheet" href="https://cikedokan.sidepe.com//assets/css/font.css">
 
 <section class="map-section mt-5">
     <div class="container">
@@ -85,10 +104,6 @@
         }
     );
 
-
-
-
-
     var tile_layer_371484c5fdafe1b3d9dc2dd007b04024 = L.tileLayer(
         "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
             "attribution": "Data by \u0026copy; \u003ca target=\"_blank\" href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca target=\"_blank\" href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.",
@@ -102,7 +117,6 @@
             "tms": false
         }
     ).addTo(map_df102c497a9a7085b8d1bf85c6207283);
-
 
     function geo_json_52fb9820c019ba755c848e9fee7b4918_styler(feature) {
         switch (feature.id) {

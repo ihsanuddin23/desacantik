@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\PendidikanRT;
 
 class IdentitasRt extends Model
 {
@@ -18,11 +19,15 @@ class IdentitasRt extends Model
         'nomor_rw',
         'dusun',
         'nama_ketua_rt',
+        'jumlah_kk',
         'tanggal_lahir_ketua_rt',
         'pendidikan_ketua_rt',
         'pekerjaan_ketua_rt',
         'nomor_telepon_ketua_rt',
     ];
 
-    // Jika ada relasi, bisa ditambahkan di sini
+    public function pendidikanRt()
+    {
+        return $this->hasMany(PendidikanRt::class, 'identitasrt_id');
+    }
 }

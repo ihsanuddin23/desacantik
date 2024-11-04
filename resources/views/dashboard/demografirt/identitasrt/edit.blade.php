@@ -68,13 +68,19 @@
                                         <input type="text" class="form-control" id="nama_ketua_rt" name="nama_ketua_rt"
                                             value="{{ old('nama_ketua_rt', $identitasRt->nama_ketua_rt) }}">
                                     </div>
+                                    <div class="form-group">
+                                        <label for="jumlah_kk">Jumlah KK</label>
+                                        <input type="number" class="form-control" id="jumlah_kk" name="jumlah_kk"
+                                            value="{{ old('jumlah_kk', $identitasRt->jumlah_kk) }}">
+                                    </div>
 
                                     <div class="form-group">
                                         <label for="tanggal_lahir_ketua_rt">Tanggal Lahir Ketua RT</label>
                                         <input type="date" class="form-control" id="tanggal_lahir_ketua_rt"
                                             name="tanggal_lahir_ketua_rt"
-                                            value="{{ old('tanggal_lahir_ketua_rt', \Carbon\Carbon::parse($identitasRt->tanggal_lahir_ketua_rt)->format('Y-m-d')) }}">
+                                            value="{{ old('tanggal_lahir_ketua_rt', $identitasRt->tanggal_lahir_ketua_rt ? \Carbon\Carbon::parse($identitasRt->tanggal_lahir_ketua_rt)->format('Y-m-d') : '') }}">
                                     </div>
+
 
                                     <div class="form-group">
                                         <label for="pendidikan_ketua_rt">Pendidikan Ketua RT</label>

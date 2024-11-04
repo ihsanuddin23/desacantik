@@ -51,8 +51,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="nama_pendidikan">Nama Pendidikan</label>
-                                        <input type="text" class="form-control" id="nama_pendidikan"
-                                            name="nama_pendidikan" value="{{ $pendidikan->nama_pendidikan }}">
+                                        <textarea class="form-control" id="nama_pendidikan" name="nama_pendidikan" rows="3">{{ $pendidikan->nama_pendidikan }}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="jumlah_volume_pendidikan">Jumlah/Volume (m2)</label>

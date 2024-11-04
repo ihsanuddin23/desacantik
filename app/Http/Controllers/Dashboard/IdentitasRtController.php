@@ -22,6 +22,8 @@ class IdentitasRtController extends Controller
             'nomor_rw' => 'nullable|string|max:255',
             'dusun' => 'nullable|string|max:255',
             'nama_ketua_rt' => 'nullable|string|max:255',
+            'jumlah_kk' => 'nullable|integer|min:0',
+            'nama_ketua_rt' => 'nullable|string|max:255',
             'tanggal_lahir_ketua_rt' => 'nullable|date',
             'pendidikan_ketua_rt' => 'nullable|string|max:255',
             'pekerjaan_ketua_rt' => 'nullable|string|max:255',
@@ -52,6 +54,7 @@ class IdentitasRtController extends Controller
             'nomor_rw' => 'nullable|string|max:255',
             'dusun' => 'nullable|string|max:255',
             'nama_ketua_rt' => 'nullable|string|max:255',
+            'jumlah_kk' => 'nullable|integer|min:0',
             'tanggal_lahir_ketua_rt' => 'nullable|date',
             'pendidikan_ketua_rt' => 'nullable|string|max:255',
             'pekerjaan_ketua_rt' => 'nullable|string|max:255',
@@ -80,5 +83,13 @@ class IdentitasRtController extends Controller
         // Redirect setelah sukses
         return redirect()->route('dashboard.dashboard.demografirt.index')
             ->with('success', 'Identitas RT berhasil dihapus.');
+    }
+    public function show($id)
+    {
+        // Cari data Identitas RT berdasarkan ID
+        $identitasRt = IdentitasRt::findOrFail($id);
+
+        // Tampilkan detail data di view
+        return view('dashboard.demografirt.identitasrt.show', compact('identitasRt'));
     }
 }
