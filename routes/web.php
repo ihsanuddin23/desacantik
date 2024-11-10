@@ -43,6 +43,7 @@ use App\Http\Controllers\Frontend\DemografiController;
 use App\Http\Controllers\Frontend\DemografiRtController;
 use App\Http\Controllers\Frontend\IdentitasRtController as FrontendIdentitasRtController;
 use App\Http\Controllers\Frontend\SejarahController;
+use App\Http\Controllers\Frontend\ToolsApiController;
 use App\Http\Controllers\Frontend\VisiMisiController;
 use Illuminate\Support\Facades\Route;
 
@@ -67,6 +68,8 @@ Route::name("frontend.")->group(function () {
     // Cetak 
     Route::get('/demografirt/print', [DemografiRtController::class, 'printPDF'])->name('demografirt.print');
     Route::get('demografirt/export-excel', [DemografiRtController::class, 'exportExcel'])->name('demografirt.exportExcel');
+
+    Route::get('api/demografi-wilayah', [ToolsApiController::class, 'DemografiWilayah'])->name('api.demografi.wilayah');
 });
 
 Route::name("auth.")->group(function () {
