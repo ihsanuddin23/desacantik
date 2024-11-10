@@ -32,7 +32,7 @@
                             <i class="fa fa-map-marker"></i> &nbsp;Jl.Saung Ranggon Kp.Cikedokan Kec.Cikarang Barat
                             Kab.Bekasi <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kecamatan Cikarang Barat Kabupaten Bekasi
                             <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Jawa Barat <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kodepos
-                            17530 <br /><i class="fa fa-phone"></i> &nbsp;Telepon : <br /><i class="fa fa-envelope"></i>
+                            17530 <br /><i class="fa fa-phone"></i> Telepon : <br /><i class="fa fa-envelope"></i>
                             Email : <br /><i class="fa fa-globe"></i> &nbsp;http://cikedokan.sidepe.com
                         </div>
                     </div>

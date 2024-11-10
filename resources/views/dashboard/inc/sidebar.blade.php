@@ -125,9 +125,9 @@
                     </ul>
                 </li>
                 <li
-                    class="nav-item {{ in_array(request()->route()->getName(), ['dashboard.dashboard.demografirt.index', 'dashboard.identitasrt.create', 'dashboard.pendidikanrt.create', 'dashboard.identitasrt.edit', 'dashboard.pendidikanrt.edit']) ? 'menu-open' : '' }}">
+                    class="nav-item {{ in_array(request()->route()->getName(), ['dashboard.dashboard.demografirt.index', 'dashboard.identitasrt.create', 'dashboard.pendidikanrt.create', 'dashboard.perkerjaanrt.create', 'dashboard.identitasrt.edit', 'dashboard.pendidikanrt.edit', 'dashboard.perkerjaanrt.edit']) ? 'menu-open' : '' }}">
                     <a href="#"
-                        class="nav-link {{ in_array(request()->route()->getName(), ['dashboard.dashboard.demografirt.index', 'dashboard.identitasrt.create', 'dashboard.pendidikanrt.create', 'dashboard.identitasrt.edit', 'dashboard.pendidikanrt.edit']) ? 'active' : '' }}">
+                        class="nav-link {{ in_array(request()->route()->getName(), ['dashboard.dashboard.demografirt.index', 'dashboard.identitasrt.create', 'dashboard.pendidikanrt.create', 'dashboard.perkerjaanrt.create', 'dashboard.identitasrt.edit', 'dashboard.pendidikanrt.edit', 'dashboard.perkerjaanrt.edit']) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-pencil-alt"></i>
                         <p>Demografi RT<i class="right fas fa-angle-left"></i></p>
                     </a>
@@ -151,6 +151,13 @@
                                 class="nav-link {{ request()->route()->getName() == 'dashboard.pendidikanrt.create' ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Pendidikan RT</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard.pekerjaanrt.create') }}"
+                                class="nav-link {{ request()->route()->getName() == 'dashboard.pekerjaanrt.create' ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pekerjaaan RT</p>
                             </a>
                         </li>
                     </ul>

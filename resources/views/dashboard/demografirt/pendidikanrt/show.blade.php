@@ -155,6 +155,64 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <!-- Tabel Riwayat Pendidikan -->
+                            <h3>Data Pendidikan Lama:</h3>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Data</th>
+                                            <th>Tanggal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($history as $index => $item)
+                                            <tr>
+                                                <td>{{ $index + 1 }}</td>
+                                                <td>
+                                                    <table class="table table-bordered">
+                                                        <tbody>
+                                                            @php
+                                                                // Periksa apakah $item->data adalah JSON atau serialized
+                                                                $data = $item->data;
+
+                                                                // Jika $data adalah string JSON, decode menjadi array
+                                                                if (
+                                                                    is_string($data) &&
+                                                                    is_array(json_decode($data, true))
+                                                                ) {
+                                                                    $data = json_decode($data, true); // Decode JSON menjadi array
+                                                                }
+                                                                // Jika $data adalah serialized string, unserialize menjadi array
+                                                                elseif (
+                                                                    is_string($data) &&
+                                                                    @unserialize($data) !== false
+                                                                ) {
+                                                                    $data = unserialize($data); // Unserialize string menjadi array
+                                                                } else {
+                                                                    // Jika tidak ada format yang valid, pastikan $data adalah array
+                                                                    $data = (array) $data; // Cast ke array
+                                                                }
+                                                            @endphp
+
+                                                            @foreach ($data as $label => $value)
+                                                                <tr>
+                                                                    <td>{{ $label }}</td>
+                                                                    <td>{{ number_format(floatval($value), 0, ',', '.') }}
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                                <td>{{ $item->created_at->format('d-m-Y H:i:s') }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+
                         </div>
                     </div>
                     <div class="card-footer">
@@ -164,5 +222,6 @@
                 </div>
             </div>
         </div>
+
     </div>
 @endsection

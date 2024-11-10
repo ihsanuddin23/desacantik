@@ -69,6 +69,16 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label for="laki_laki">Jumlah Laki-kaki</label>
+                                        <input type="number" class="form-control" id="laki_laki" name="laki_laki">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="perempuan">Jumlah Perempuan</label>
+                                        <input type="number" class="form-control" id="perempuan" name="perempuan">
+                                    </div>
+
+                                    <div class="form-group">
                                         <label for="tanggal_lahir_ketua_rt">Tanggal Lahir Ketua RT</label>
                                         <input type="date" class="form-control" id="tanggal_lahir_ketua_rt"
                                             name="tanggal_lahir_ketua_rt">

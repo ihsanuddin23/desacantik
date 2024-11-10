@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('dusun')->nullable();
             $table->string('nama_ketua_rt')->nullable();
             $table->integer('jumlah_kk')->nullable();
+            $table->integer('laki_laki')->nullable();
+            $table->integer('perempuan')->nullable();
             $table->date('tanggal_lahir_ketua_rt')->nullable();
             $table->string('pendidikan_ketua_rt')->nullable();
             $table->string('pekerjaan_ketua_rt')->nullable();

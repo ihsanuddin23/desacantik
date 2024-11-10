@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\IdentitasRt;
 use App\Models\PendidikanRT;
+use App\Models\PendidikanRtHistory;
 use Illuminate\Http\Request;
 
 class PendidikanRtController extends Controller
@@ -23,31 +24,13 @@ class PendidikanRtController extends Controller
     {
         // Validasi input
         $request->validate([
-            'identitasrt_id' => 'required|exists:identitasrt,id',
-            'laki_laki' => 'nullable|integer|min:0',
-            'laki_belum_sekolah' => 'nullable|integer|min:0',
-            'laki_belum_tamat_sd' => 'nullable|integer|min:0',
-            'laki_tamat_sd' => 'nullable|integer|min:0',
-            'laki_sltp' => 'nullable|integer|min:0',
-            'laki_slta' => 'nullable|integer|min:0',
-            'laki_diploma_1_2' => 'nullable|integer|min:0',
-            'laki_diploma_3' => 'nullable|integer|min:0',
-            'laki_diploma_4_strata_1' => 'nullable|integer|min:0',
-            'laki_strata_2' => 'nullable|integer|min:0',
-            'laki_strata_3' => 'nullable|integer|min:0',
-            'laki_belum_mengisi' => 'nullable|integer|min:0',
-            'perempuan' => 'nullable|integer|min:0',
-            'perempuan_belum_sekolah' => 'nullable|integer|min:0',
-            'perempuan_belum_tamat_sd' => 'nullable|integer|min:0',
-            'perempuan_tamat_sd' => 'nullable|integer|min:0',
-            'perempuan_sltp' => 'nullable|integer|min:0',
-            'perempuan_slta' => 'nullable|integer|min:0',
-            'perempuan_diploma_1_2' => 'nullable|integer|min:0',
-            'perempuan_diploma_3' => 'nullable|integer|min:0',
-            'perempuan_diploma_4_strata_1' => 'nullable|integer|min:0',
-            'perempuan_strata_2' => 'nullable|integer|min:0',
-            'perempuan_strata_3' => 'nullable|integer|min:0',
-            'perempuan_belum_mengisi' => 'nullable|integer|min:0',
+            'identitasrt_id' => 'required|exists:identitasrt,id', // Validasi ID Identitas RT
+            'total' => 'required|integer|max:999',
+            'tidak_tamat_sd' => 'required|integer|max:999',
+            'tamat_sd' => 'required|integer|max:999',
+            'tamat_smp' => 'required|integer|max:999',
+            'tamat_sma' => 'required|integer|max:999',
+            'tamat_perguruan_tinggi' => 'required|integer|max:999',
         ]);
 
         // Menyimpan data ke database
@@ -56,6 +39,7 @@ class PendidikanRtController extends Controller
         // Redirect ke halaman dengan pesan sukses
         return redirect()->route('dashboard.dashboard.demografirt.index')->with('success', 'Data pendidikan berhasil ditambahkan.');
     }
+
     public function edit($id)
     {
         $pendidikanrt = PendidikanRt::findOrFail($id);
@@ -64,53 +48,51 @@ class PendidikanRtController extends Controller
         return view('dashboard.demografirt.pendidikanrt.edit', compact('pendidikanrt', 'identitas'));
     }
 
-    // Mengupdate data pendidikan di database
     public function update(Request $request, $id)
     {
+        // Temukan data PendidikanRt berdasarkan ID yang diberikan
+        $pendidikanrt = PendidikanRt::findOrFail($id);
+
         // Validasi input
-        $request->validate([
-            'identitasrt_id' => 'required|exists:identitasrt,id',
-            'laki_laki' => 'nullable|integer|min:0',
-            'laki_belum_sekolah' => 'nullable|integer|min:0',
-            'laki_belum_tamat_sd' => 'nullable|integer|min:0',
-            'laki_tamat_sd' => 'nullable|integer|min:0',
-            'laki_sltp' => 'nullable|integer|min:0',
-            'laki_slta' => 'nullable|integer|min:0',
-            'laki_diploma_1_2' => 'nullable|integer|min:0',
-            'laki_diploma_3' => 'nullable|integer|min:0',
-            'laki_diploma_4_strata_1' => 'nullable|integer|min:0',
-            'laki_strata_2' => 'nullable|integer|min:0',
-            'laki_strata_3' => 'nullable|integer|min:0',
-            'laki_belum_mengisi' => 'nullable|integer|min:0',
-            'perempuan' => 'nullable|integer|min:0',
-            'perempuan_belum_sekolah' => 'nullable|integer|min:0',
-            'perempuan_belum_tamat_sd' => 'nullable|integer|min:0',
-            'perempuan_tamat_sd' => 'nullable|integer|min:0',
-            'perempuan_sltp' => 'nullable|integer|min:0',
-            'perempuan_slta' => 'nullable|integer|min:0',
-            'perempuan_diploma_1_2' => 'nullable|integer|min:0',
-            'perempuan_diploma_3' => 'nullable|integer|min:0',
-            'perempuan_diploma_4_strata_1' => 'nullable|integer|min:0',
-            'perempuan_strata_2' => 'nullable|integer|min:0',
-            'perempuan_strata_3' => 'nullable|integer|min:0',
-            'perempuan_belum_mengisi' => 'nullable|integer|min:0',
+        $validatedData = $request->validate([
+            'identitasrt_id' => 'nullable|exists:identitasrt,id', // Jika editing, identitasrt_id bersifat opsional
+            'total' => 'required|integer|max:999',
+            'tidak_tamat_sd' => 'required|integer|max:999',
+            'tamat_sd' => 'required|integer|max:999',
+            'tamat_smp' => 'required|integer|max:999',
+            'tamat_sma' => 'required|integer|max:999',
+            'tamat_perguruan_tinggi' => 'required|integer|max:999',
+            // tambahkan validasi untuk field lainnya sesuai kebutuhan
         ]);
 
-        // Temukan data yang akan diupdate
-        $pendidikan = PendidikanRt::findOrFail($id);
+        // Update data PendidikanRt dengan data yang sudah tervalidasi
+        $pendidikanrt->update($validatedData);
 
-        // Update data
-        $pendidikan->update($request->all());
-
-        // Mengalihkan ke halaman dengan pesan sukses
-        return redirect()->route('dashboard.dashboard.demografirt.index')->with('success', 'Data pendidikan berhasil diupdate.');
+        // Redirect ke halaman yang sesuai dengan pesan sukses
+        return redirect()->route('dashboard.dashboard.demografirt.index')->with('success', 'Pendidikan RT berhasil diperbarui.');
     }
+
     public function show($id)
     {
         // Mengambil data pendidikan berdasarkan ID
         $pendidikanrt = PendidikanRt::findOrFail($id);
         $identitas = IdentitasRt::findOrFail($pendidikanrt->identitasrt_id);
 
-        return view('dashboard.demografirt.pendidikanrt.show', compact('pendidikanrt', 'identitas'));
+
+        // Mengambil data history (jika ada)
+        $history = PendidikanRtHistory::where('pendidikanrt_id', $id)->get();
+
+        return view('dashboard.demografirt.pendidikanrt.show', compact('pendidikanrt', 'identitas', 'history'));
+    }
+    public function destroy($id)
+    {
+        // Temukan data PendidikanRt berdasarkan ID yang diberikan
+        $pendidikanrt = PendidikanRt::findOrFail($id);
+
+        // Hapus data PendidikanRt dari database
+        $pendidikanrt->delete();
+
+        // Redirect ke halaman yang sesuai dengan pesan sukses
+        return redirect()->route('dashboard.dashboard.demografirt.index')->with('success', 'Data pendidikan berhasil dihapus.');
     }
 }

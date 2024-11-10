@@ -31,7 +31,7 @@
                                                 <div class="archive-blog-title">
                                                     <h3>
                                                         <a href="{{ route('frontend.post', $data->slug) }}">
-                                                            {{ $data->title }}
+                                                            {{ Str::limit(strip_tags($data->title), 10) }}
                                                         </a>
                                                     </h3>
                                                 </div>
@@ -44,12 +44,12 @@
                                                     <div class="post-cat">
                                                         <a href="{{ route('frontend.category', $data->category->slug) }}">
                                                             <i class="fa fa-newspaper-o"></i>
-                                                            {{ $data->category->title }}
+                                                            {{ Str::limit(strip_tags($data->category->title), 10) }}
                                                         </a>
                                                     </div>
                                                 </div>
                                                 <div class="blog-content">
-                                                    <p>{{ Str::limit(strip_tags($data->content), 100) }}</p>
+                                                    <p>{{ Str::limit(strip_tags($data->content), 10) }}</p>
                                                     <!-- Ringkasan isi berita tanpa tag HTML -->
                                                 </div>
                                             </div>

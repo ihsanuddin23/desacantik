@@ -1,4 +1,161 @@
 @extends('frontend2.themes')
+<style>
+    .dropdown-menu {
+        padding: 0;
+        border-radius: 0;
+    }
+
+    .dropdown-menu>li>a {
+        padding: 10px 15px;
+    }
+
+    .dropdown-menu>li>a:hover {
+        background-color: #f0f0f0;
+    }
+
+    #chart-container-laki {
+        margin-top: 30px;
+        height: 400px;
+        width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #total-container h5 {
+        font-size: 20px;
+        color: #333;
+    }
+
+    /* Kartu utama */
+    .card {
+        margin-top: 20px;
+        border-radius: 15px;
+        /* Membuat sudut kartu lebih halus */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        /* Menambahkan bayangan */
+    }
+
+    .card-header {
+        border-bottom: 1px solid #ddd;
+        /* Membuat garis bawah pada header */
+        padding: 10px;
+        border-radius: 10px
+            /* Menambah padding agar header tidak terlalu padat */
+    }
+
+    .card-body {
+        padding: 10px;
+        /* Menambah padding agar lebih lega */
+    }
+
+    .custom-border th,
+    .custom-border td {
+        border: 2px solid #343a40 !important;
+    }
+
+    /* Menyesuaikan ukuran teks responsif pada header tabel */
+    @media (max-width: 768px) {
+        .table th {
+            font-size: 16px;
+            /* Ukuran font yang lebih besar untuk perangkat mobile */
+        }
+    }
+
+    @media (min-width: 768px) and (max-width: 992px) {
+        .table th {
+            font-size: 18px;
+            /* Ukuran font lebih besar di tablet */
+        }
+    }
+
+    @media (min-width: 992px) {
+        .table th {
+            font-size: 15px;
+            /* Ukuran font lebih besar untuk perangkat desktop */
+        }
+    }
+
+    /* Menambahkan latar belakang bergantian pada baris */
+    .custom-border tbody tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    /* Hover effect untuk baris tabel */
+    .custom-border tbody tr:hover {
+        background-color: #e9ecef;
+    }
+
+    /* Memperindah header tabel */
+    .custom-border th {
+        background-color: #343a40;
+        color: #ffffff;
+        font-weight: bold;
+        padding: 12px;
+        word-wrap: break-word;
+        /* Membuat teks panjang terpotong dengan baik */
+        white-space: normal;
+        /* Memungkinkan teks memanjang ke bawah jika terlalu panjang */
+
+    }
+
+    /* Mengubah warna border pada header */
+    .custom-border th,
+    .custom-border td {
+        border-color: #343a40;
+    }
+
+    /* Tabel Responsif */
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    /* Memberikan padding lebih pada sel tabel */
+    .custom-border td,
+    .custom-border th {
+        padding: 12px;
+    }
+
+    /* Memberikan bayangan halus pada tabel */
+    .custom-border {
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Menambahkan border-radius pada header dan body */
+    .custom-border thead {
+        border-radius: 10px 10px 0 0;
+    }
+
+    .custom-border tbody {
+        border-radius: 0 0 10px 10px;
+    }
+
+    /* Menyesuaikan kolom dengan nama panjang */
+    .custom-border th:nth-child(4),
+    .custom-border th:nth-child(5) {
+        width: 250px;
+        /* Menyesuaikan lebar kolom dengan nama panjang */
+        word-wrap: break-word;
+        white-space: normal;
+    }
+
+    /* Menjadikan kolom Identitas RT dan Nama Ketua RT rata kiri */
+    .custom-border td:nth-child(2),
+    .custom-border td:nth-child(3),
+    .custom-border th:nth-child(2),
+    .custom-border th:nth-child(3) {
+        text-align: left;
+        /* Kolom Identitas RT dan Nama Ketua RT rata kiri */
+    }
+
+    /* Memperlebar kolom untuk Identitas RT dan Nama Ketua RT */
+    .custom-border td:nth-child(2),
+    .custom-border th:nth-child(2),
+    .custom-border td:nth-child(3),
+    .custom-border th:nth-child(3) {
+        width: 380px;
+        /* Memperlebar kolom Identitas RT dan Nama Ketua RT */
+    }
+</style>
 
 @section('content')
     <div class="menu-layanan">
@@ -18,308 +175,78 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card mb-4" style="border-radius: 15px; padding: 20px; border: 1px solid black;">
-                        <div class="card-body">
-                            @include('frontend2.widget.peta.demografi')
-                        </div>
-                    </div>
-                    {{-- Chart --}}
-                    <div class="card mb-4 shadow-sm border-0 rounded">
+                    {{-- Chart Pria --}}
+                    <div class="card shadow-sm border-0 rounded">
                         <div class="card-header bg-primary text-white text-center">
-                            <h3 class="m-0">Grafik Data Demografi Berdasar Pendidikan Dalam KK Pendidikan RT</h3>
+                            <h3 class="m-0">Grafik Demografi Pendidikan di Desa Cikedokan</h3>
                         </div>
                         <div class="card-body">
-                            <div id="total-container" class="text-center" style="margin: 20px 0;"></div>
+                            <div id="total-container-pendidikan" class="text-center" style="margin: 20px 0;"></div>
 
                             <div id="chart-container-laki" style="margin-top: 20px; height: 400px; width: 100%;"></div>
-                            <div id="chart-container-perempuan" style="margin-top: 20px; height: 400px; width: 100%;"></div>
 
                             <script type="text/javascript">
                                 document.addEventListener('DOMContentLoaded', function() {
-                                    const pendidikanData = @json($pendidikanRtData); // Data dari Laravel
-                                    console.log(pendidikanData); // Debugging
+                                    // Mengambil data dari Laravel dan memastikan format yang benar
+                                    const pendidikanData = @json($pendidikanRtData); // Data yang dikirim dari Laravel
 
-                                    const lakiLakiData = [{
-                                            name: 'Belum Sekolah',
-                                            y: 0,
-                                            dataLabels: {
-                                                style: {
-                                                    fontSize: '16px',
-                                                    fontWeight: 'bold'
-                                                }
-                                            }
+                                    // Pastikan data pendidikanData telah benar
+                                    console.log(pendidikanData); // Debugging data yang diterima
+
+                                    // Mendefinisikan data untuk chart, mulai dengan nilai default 0 (tanpa kategori 'Belum Sekolah')
+                                    const pendidikanChartData = [{
+                                            name: 'Tidak Tamat SD',
+                                            y: 0
                                         },
                                         {
-                                            name: 'Belum Tamat SD',
-                                            y: 0,
-                                            dataLabels: {
-                                                style: {
-                                                    fontSize: '16px',
-                                                    fontWeight: 'bold'
-                                                }
-                                            }
+                                            name: 'Tamat SD/Sederajat',
+                                            y: 0
                                         },
                                         {
-                                            name: 'Tamat SD',
-                                            y: 0,
-                                            dataLabels: {
-                                                style: {
-                                                    fontSize: '16px',
-                                                    fontWeight: 'bold'
-                                                }
-                                            }
+                                            name: 'Tamat SMP/Sederajat',
+                                            y: 0
                                         },
                                         {
-                                            name: 'SLTP',
-                                            y: 0,
-                                            dataLabels: {
-                                                style: {
-                                                    fontSize: '16px',
-                                                    fontWeight: 'bold'
-                                                }
-                                            }
+                                            name: 'Tamat SMA/Sederajat',
+                                            y: 0
                                         },
                                         {
-                                            name: 'SLTA',
-                                            y: 0,
-                                            dataLabels: {
-                                                style: {
-                                                    fontSize: '16px',
-                                                    fontWeight: 'bold'
-                                                }
-                                            }
-                                        },
-                                        {
-                                            name: 'Diploma 1/2',
-                                            y: 0,
-                                            dataLabels: {
-                                                style: {
-                                                    fontSize: '16px',
-                                                    fontWeight: 'bold'
-                                                }
-                                            }
-                                        },
-                                        {
-                                            name: 'Diploma 3',
-                                            y: 0,
-                                            dataLabels: {
-                                                style: {
-                                                    fontSize: '16px',
-                                                    fontWeight: 'bold'
-                                                }
-                                            }
-                                        },
-                                        {
-                                            name: 'Diploma 4/Strata 1',
-                                            y: 0,
-                                            dataLabels: {
-                                                style: {
-                                                    fontSize: '16px',
-                                                    fontWeight: 'bold'
-                                                }
-                                            }
-                                        },
-                                        {
-                                            name: 'Strata 2',
-                                            y: 0,
-                                            dataLabels: {
-                                                style: {
-                                                    fontSize: '16px',
-                                                    fontWeight: 'bold'
-                                                }
-                                            }
-                                        },
-                                        {
-                                            name: 'Strata 3',
-                                            y: 0,
-                                            dataLabels: {
-                                                style: {
-                                                    fontSize: '16px',
-                                                    fontWeight: 'bold'
-                                                }
-                                            }
-                                        },
-                                        {
-                                            name: 'Belum Mengisi',
-                                            y: 0,
-                                            dataLabels: {
-                                                style: {
-                                                    fontSize: '16px',
-                                                    fontWeight: 'bold'
-                                                }
-                                            }
-                                        }
-                                    ];
-                                    const perempuanData = [{
-                                            name: 'Belum Sekolah',
-                                            y: 0,
-                                            dataLabels: {
-                                                style: {
-                                                    fontSize: '16px',
-                                                    fontWeight: 'bold'
-                                                }
-                                            }
-                                        },
-                                        {
-                                            name: 'Belum Tamat SD',
-                                            y: 0,
-                                            dataLabels: {
-                                                style: {
-                                                    fontSize: '16px',
-                                                    fontWeight: 'bold'
-                                                }
-                                            }
-                                        },
-                                        {
-                                            name: 'Tamat SD',
-                                            y: 0,
-                                            dataLabels: {
-                                                style: {
-                                                    fontSize: '16px',
-                                                    fontWeight: 'bold'
-                                                }
-                                            }
-                                        },
-                                        {
-                                            name: 'SLTP',
-                                            y: 0,
-                                            dataLabels: {
-                                                style: {
-                                                    fontSize: '16px',
-                                                    fontWeight: 'bold'
-                                                }
-                                            }
-                                        },
-                                        {
-                                            name: 'SLTA',
-                                            y: 0,
-                                            dataLabels: {
-                                                style: {
-                                                    fontSize: '16px',
-                                                    fontWeight: 'bold'
-                                                }
-                                            }
-                                        },
-                                        {
-                                            name: 'Diploma 1/2',
-                                            y: 0,
-                                            dataLabels: {
-                                                style: {
-                                                    fontSize: '16px',
-                                                    fontWeight: 'bold'
-                                                }
-                                            }
-                                        },
-                                        {
-                                            name: 'Diploma 3',
-                                            y: 0,
-                                            dataLabels: {
-                                                style: {
-                                                    fontSize: '16px',
-                                                    fontWeight: 'bold'
-                                                }
-                                            }
-                                        },
-                                        {
-                                            name: 'Diploma 4/Strata 1',
-                                            y: 0,
-                                            dataLabels: {
-                                                style: {
-                                                    fontSize: '16px',
-                                                    fontWeight: 'bold'
-                                                }
-                                            }
-                                        },
-                                        {
-                                            name: 'Strata 2',
-                                            y: 0,
-                                            dataLabels: {
-                                                style: {
-                                                    fontSize: '16px',
-                                                    fontWeight: 'bold'
-                                                }
-                                            }
-                                        },
-                                        {
-                                            name: 'Strata 3',
-                                            y: 0,
-                                            dataLabels: {
-                                                style: {
-                                                    fontSize: '16px',
-                                                    fontWeight: 'bold'
-                                                }
-                                            }
-                                        },
-                                        {
-                                            name: 'Belum Mengisi',
-                                            y: 0,
-                                            dataLabels: {
-                                                style: {
-                                                    fontSize: '16px',
-                                                    fontWeight: 'bold'
-                                                }
-                                            }
+                                            name: 'Tamat Akademi/Perguruan Tinggi',
+                                            y: 0
                                         }
                                     ];
 
-                                    // Menghitung jumlah untuk laki-laki dan perempuan
+                                    // Menghitung jumlah untuk setiap kategori pendidikan berdasarkan data
                                     pendidikanData.forEach(data => {
-                                        lakiLakiData[0].y += data.laki_belum_sekolah;
-                                        lakiLakiData[1].y += data.laki_belum_tamat_sd;
-                                        lakiLakiData[2].y += data.laki_tamat_sd;
-                                        lakiLakiData[3].y += data.laki_sltp;
-                                        lakiLakiData[4].y += data.laki_slta;
-                                        lakiLakiData[5].y += data.laki_diploma_1_2;
-                                        lakiLakiData[6].y += data.laki_diploma_3;
-                                        lakiLakiData[7].y += data.laki_diploma_4_strata_1;
-                                        lakiLakiData[8].y += data.laki_strata_2;
-                                        lakiLakiData[9].y += data.laki_strata_3;
-                                        lakiLakiData[10].y += data.laki_belum_mengisi;
-
-                                        perempuanData[0].y += data.perempuan_belum_sekolah;
-                                        perempuanData[1].y += data.perempuan_belum_tamat_sd;
-                                        perempuanData[2].y += data.perempuan_tamat_sd;
-                                        perempuanData[3].y += data.perempuan_sltp;
-                                        perempuanData[4].y += data.perempuan_slta;
-                                        perempuanData[5].y += data.perempuan_diploma_1_2;
-                                        perempuanData[6].y += data.perempuan_diploma_3;
-                                        perempuanData[7].y += data.perempuan_diploma_4_strata_1;
-                                        perempuanData[8].y += data.perempuan_strata_2;
-                                        perempuanData[9].y += data.perempuan_strata_3;
-                                        perempuanData[10].y += data.perempuan_belum_mengisi;
+                                        pendidikanChartData[0].y += data.tidak_tamat_sd || 0;
+                                        pendidikanChartData[1].y += data.tamat_sd || 0;
+                                        pendidikanChartData[2].y += data.tamat_smp || 0;
+                                        pendidikanChartData[3].y += data.tamat_sma || 0;
+                                        pendidikanChartData[4].y += data.tamat_perguruan_tinggi || 0;
                                     });
 
-                                    const totalLakiLaki = lakiLakiData.reduce((sum, item) => sum + item.y, 0);
-                                    const totalPerempuan = perempuanData.reduce((sum, item) => sum + item.y, 0);
+                                    // Menghitung total jumlah pendidikan
+                                    const totalPendidikan = pendidikanChartData.reduce((sum, item) => sum + item.y, 0);
 
-                                    document.getElementById('total-container').innerHTML = `
-                                        <h5>Total Laki-Laki: ${totalLakiLaki}</h5>
-                                        <h5>Total Perempuan: ${totalPerempuan}</h5>
+                                    // Menampilkan total pendidikan
+                                    document.getElementById('total-container-pendidikan').innerHTML = `
+                                        <h5>Total Pendidikan: ${totalPendidikan}</h5>
                                     `;
 
-                                    // Mengurutkan data dari yang terkecil ke terbesar
-                                    lakiLakiData.sort((a, b) => a.y - b.y);
-                                    perempuanData.sort((a, b) => a.y - b.y);
-
-                                    // Menyiapkan data untuk grafik
-                                    const barDataLakiLaki = lakiLakiData.map(item => ({
-                                        ...item,
-                                        name: 'Laki-Laki - ' + item.name
-                                    }));
-
-                                    const barDataPerempuan = perempuanData.map(item => ({
-                                        ...item,
-                                        name: 'Perempuan - ' + item.name
-                                    }));
-
+                                    // Membuat grafik menggunakan Highcharts
                                     Highcharts.chart('chart-container-laki', {
                                         chart: {
-                                            type: 'column'
+                                            type: 'column',
+                                            backgroundColor: '#f8f9fa',
+                                            borderRadius: 10,
+                                            shadow: true
                                         },
                                         title: {
-                                            text: 'Pendidikan Laki-Laki',
+                                            text: 'Distribusi Pendidikan Laki-Laki',
                                             style: {
-                                                fontSize: '22px'
+                                                fontSize: '22px',
+                                                fontWeight: 'bold',
+                                                color: '#333'
                                             }
                                         },
                                         xAxis: {
@@ -327,7 +254,14 @@
                                             title: {
                                                 text: 'Kategori Pendidikan',
                                                 style: {
-                                                    fontSize: '18px'
+                                                    fontSize: '18px',
+                                                    fontWeight: 'bold',
+                                                }
+                                            },
+                                            labels: {
+                                                style: {
+                                                    fontSize: '15px',
+                                                    fontWeight: 'bold'
                                                 }
                                             }
                                         },
@@ -335,99 +269,72 @@
                                             title: {
                                                 text: 'Jumlah',
                                                 style: {
-                                                    fontSize: '18px'
-                                                }
-                                            }
-                                        },
-                                        xAxis: {
-                                            type: 'category',
-                                            title: {
-                                                text: 'Kategori Pendidikan',
-                                                style: {
-                                                    fontSize: '14px'
-                                                } // Ukuran teks judul sumbu x
-                                            },
-                                            labels: {
-                                                style: {
-                                                    fontSize: '14px', // Ukuran teks untuk label kategori pada sumbu x
-                                                    fontWeight: 'bold' // Membuat teks lebih tebal untuk penekanan
+                                                    fontSize: '18px',
+                                                    fontWeight: 'normal',
                                                 }
                                             }
                                         },
                                         series: [{
                                             name: 'Jumlah',
-                                            data: lakiLakiData,
+                                            data: pendidikanChartData,
                                             colorByPoint: true,
                                             dataLabels: {
                                                 enabled: true,
                                                 style: {
-                                                    fontSize: '16px'
-                                                } // Atur ukuran teks data label di sini
+                                                    fontSize: '25px',
+                                                    fontWeight: 'bold',
+                                                }
                                             }
-                                        }]
-                                    });
-                                    Highcharts.chart('chart-container-perempuan', {
-                                        chart: {
-                                            type: 'column'
-                                        },
-                                        title: {
-                                            text: 'Pendidikan Laki-Laki',
+                                        }],
+                                        tooltip: {
+                                            useHTML: true,
+                                            backgroundColor: '#343a40',
+                                            borderRadius: 10,
+                                            borderWidth: 2,
+                                            borderColor: '#6c757d',
                                             style: {
-                                                fontSize: '22px'
-                                            }
-                                        },
-                                        xAxis: {
-                                            type: 'category',
-                                            title: {
-                                                text: 'Kategori Pendidikan',
-                                                style: {
-                                                    fontSize: '18px'
-                                                }
-                                            }
-                                        },
-                                        yAxis: {
-                                            title: {
-                                                text: 'Jumlah',
-                                                style: {
-                                                    fontSize: '18px'
-                                                }
-                                            }
-                                        },
-                                        xAxis: {
-                                            type: 'category',
-                                            title: {
-                                                text: 'Kategori Pendidikan',
-                                                style: {
-                                                    fontSize: '14px'
-                                                } // Ukuran teks judul sumbu x
+                                                fontSize: '18px',
+                                                fontWeight: 'bold',
+                                                color: '#ffffff',
+                                                padding: '10px',
                                             },
-                                            labels: {
-                                                style: {
-                                                    fontSize: '14px', // Ukuran teks untuk label kategori pada sumbu x
-                                                    fontWeight: 'bold' // Membuat teks lebih tebal untuk penekanan
-                                                }
-                                            }
-                                        },
-                                        series: [{
-                                            name: 'Jumlah',
-                                            data: lakiLakiData,
-                                            colorByPoint: true,
-                                            dataLabels: {
-                                                enabled: true,
-                                                style: {
-                                                    fontSize: '16px'
-                                                } // Atur ukuran teks data label di sini
-                                            }
-                                        }]
+                                            formatter: function() {
+                                                return `<b style="color: #ffc107;">${this.point.name}:</b> <span style="color: #fff;">${this.point.y}</span>`;
+                                            },
+                                            shadow: true
+                                        }
                                     });
-
-
                                 });
                             </script>
                         </div>
                     </div>
+
                     <!-- Filter di bawah kanan h2 dengan tambahan jarak -->
                     <div class="mb-4 text-right" style="margin-top: 20px;">
+                        <div class="form-group" style="width: 100px; display: inline-block; margin-left: 10px;">
+                            <div class="dropdown">
+                                <button class="btn btn-primary form-control dropdown-toggle" type="button"
+                                    id="cetakDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span>Cetak</span>
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="cetakDropdown">
+                                    <li>
+                                        <a href="{{ route('frontend.demografirt.print', ['identitasrt_id' => request('identitasrt_id')]) }}"
+                                            id="printPdf" onclick="checkRTSelection(event, 'pdf')">
+                                            <i class="fa fa-file-pdf-o text-danger mr-2"></i> Cetak PDF
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('frontend.demografirt.exportExcel', ['identitasrt_id' => request('identitasrt_id')]) }}"
+                                            id="exportExcel" onclick="checkRTSelection(event, 'excel')">
+                                            <i class="fa fa-file-excel-o text-success mr-2"></i> Cetak Excel
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
                         <div class="form-group" style="width: 250px; display: inline-block;">
                             <select name="identitasrt_id" id="identitasrt_id" class="form-control"
                                 onchange="filterByIdentitas()">
@@ -442,643 +349,54 @@
                             </select>
                         </div>
                     </div>
+                    {{-- Tabel --}}
+                    <div class="container mt-4">
+                        <div class="card shadow border-dark rounded-3">
+                            <div class="card-header bg-dark text-light text-center rounded-top">
+                                <h5 class="fw-bold" style="font-size: 20px;">Data Berdasarkan Filter Identitas RT</h5>
+                            </div>
+                            <div class="card-body p-4">
+                                <!-- Tabel untuk menampilkan data berdasarkan filter Identitas RT -->
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover table-striped text-center custom-border">
+                                        <thead class="table-dark">
+                                            <tr class="fs-6">
+                                                <th>No</th>
+                                                <th>Identitas RT</th>
+                                                <th>Nama Ketua RT</th>
+                                                <th>Tidak Tamat SD</th>
+                                                <th>Tamat SD/sederajat</th>
+                                                <th>Tamat SMP/sederajat</th>
+                                                <th>Tamat SMA/sederajat</th>
+                                                <th>Tamat Akademi/Perguruan Tinggi</th>
+                                                <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($filteredData as $index => $item)
+                                                <tr class="fs-6">
+                                                    <td>{{ $index + 1 }}</td>
+                                                    <td>
+                                                        <!-- Gabungkan Nomor RT, Nomor RW, dan Dusun menjadi satu kolom -->
+                                                        RT {{ $item->identitasrt->nomor_rt }} -
+                                                        RW {{ $item->identitasrt->nomor_rw }} -
+                                                        DUSUN {{ $item->identitasrt->dusun }}
+                                                    </td>
 
-                    <!-- Heading di bagian atas -->
-                    <h2 class="text-center mb-4">Data Demografi RT Desa Cikedokan</h2>
-
-                    <!-- Sarana Pendidikan Table -->
-                    <div class="pendidikan-rt">
-
-                        @if ($pendidikanrt->isEmpty())
-                            <p class="text-center">Tidak ada data Pendidikan RT.</p>
-                        @else
-                            <div class="card mb-4" style="border-radius: 15px; padding: 3px 20px; border: 1px solid black;">
-                                <div class="card-body">
-                                    <h2 class="card-title text-center"
-                                        style="color: black; font-size: 2rem; font-weight: bold;">
-                                        Data Pendidikan RT
-                                    </h2>
-
-                                    <div class="table-responsive">
-                                        <table id="pendidikanTable" class="table table-bordered table-striped table-hover">
-                                            <thead class="thead-dark">
-                                                <tr>
-                                                    <th rowspan="2" class="text-center" style="border: 1px solid black;">
-                                                        NO</th>
-                                                    <th rowspan="2" class="text-center" style="border: 1px solid black;">
-                                                        KELOMPOK</th>
-                                                    <th colspan="2" class="text-center" style="border: 1px solid black;">
-                                                        JUMLAH</th>
-                                                    <th colspan="2" class="text-center" style="border: 1px solid black;">
-                                                        LAKI-LAKI</th>
-                                                    <th colspan="2" class="text-center" style="border: 1px solid black;">
-                                                        PEREMPUAN</th>
+                                                    <td>{{ ucwords(strtolower($item->identitasrt->nama_ketua_rt)) }}</td>
+                                                    <td>{{ $item->tidak_tamat_sd }}</td>
+                                                    <td>{{ $item->tamat_sd }}</td>
+                                                    <td>{{ $item->tamat_smp }}</td>
+                                                    <td>{{ $item->tamat_sma }}</td>
+                                                    <td>{{ $item->tamat_perguruan_tinggi }}</td>
+                                                    <td>{{ $item->total }}</td>
                                                 </tr>
-                                                <tr>
-                                                    <th class="text-center" style="border: 1px solid black;">JUMLAH</th>
-                                                    <th class="text-center" style="border: 1px solid black;">PERSENTASE
-                                                    </th>
-                                                    <th class="text-center" style="border: 1px solid black;">JUMLAH</th>
-                                                    <th class="text-center" style="border: 1px solid black;">PERSENTASE
-                                                    </th>
-                                                    <th class="text-center" style="border: 1px solid black;">JUMLAH</th>
-                                                    <th class="text-center" style="border: 1px solid black;">PERSENTASE
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @php
-                                                    $nomor = 1; // Inisialisasi nomor urut
-                                                @endphp
-
-                                                @if ($pendidikanrt->isEmpty() && request('identitasrt_id'))
-                                                    <tr>
-                                                        <td colspan="8" class="text-center">Data tidak tersedia untuk
-                                                            RT
-                                                            yang dipilih.</td>
-                                                    </tr>
-                                                @else
-                                                    @foreach ($pendidikanrt as $data)
-                                                        {{-- Belum Sekolah --}}
-                                                        <tr>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $nomor++ }}</td>
-                                                            <td style="border: 1px solid black;">
-                                                                TIDAK / BELUM SEKOLAH</td>
-
-                                                            @php
-                                                                // Hitung total laki-laki dan perempuan tidak/belum sekolah
-                                                                $total =
-                                                                    $data->laki_belum_sekolah +
-                                                                    $data->perempuan_belum_sekolah;
-                                                            @endphp
-
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $total }}</td>
-
-                                                            {{-- Persentase total laki-laki dan perempuan --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total_population > 0)
-                                                                    {{ round(($total / $total_population) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-
-                                                            {{-- Data dan persentase untuk laki-laki --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $data->laki_belum_sekolah }}</td>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total_population > 0)
-                                                                    {{ round(($data->laki_belum_sekolah / $total_population) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-
-                                                            {{-- Data dan persentase untuk perempuan --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $data->perempuan_belum_sekolah }}</td>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total_population > 0)
-                                                                    {{ round(($data->perempuan_belum_sekolah / $total_population) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-
-                                                        </tr>
-                                                        {{-- Belum Tamat SD --}}
-                                                        <tr>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $nomor++ }}</td>
-                                                            <!-- Tampilkan dan increment nomor -->
-                                                            <td style="border: 1px solid black;">
-                                                                BELUM TAMAT SD/SEDERAJAT</td>
-
-                                                            @php
-                                                                // Hitung total laki-laki dan perempuan tidak/belum tamat SD
-                                                                $total =
-                                                                    $data->laki_belum_tamat_sd +
-                                                                    $data->perempuan_belum_tamat_sd;
-                                                            @endphp
-
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $total }}</td>
-
-                                                            {{-- Persentase total laki-laki dan perempuan --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total_population > 0)
-                                                                    {{ round(($total / $total_population) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-
-                                                            {{-- Data dan persentase untuk laki-laki --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $data->laki_belum_tamat_sd }}</td>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total > 0)
-                                                                    {{ round(($data->laki_belum_tamat_sd / $total) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-
-                                                            {{-- Data dan persentase untuk perempuan --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $data->perempuan_belum_tamat_sd }}</td>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total > 0)
-                                                                    {{ round(($data->perempuan_belum_tamat_sd / $total) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-                                                        </tr>
-                                                        {{-- Tamat SD --}}
-                                                        <tr>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $nomor++ }}</td>
-                                                            <!-- Tampilkan dan increment nomor -->
-                                                            <td style="border: 1px solid black;">
-                                                                TAMAT SD / SEDERAJAT</td>
-
-                                                            @php
-                                                                // Hitung total laki-laki dan perempuan tamat SD
-                                                                $total =
-                                                                    $data->laki_tamat_sd + $data->perempuan_tamat_sd;
-                                                            @endphp
-
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $total }}</td>
-
-                                                            {{-- Persentase total laki-laki dan perempuan --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total_population > 0)
-                                                                    {{ round(($total / $total_population) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-
-                                                            {{-- Data dan persentase untuk laki-laki --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $data->laki_tamat_sd }}</td>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total > 0)
-                                                                    {{ round(($data->laki_tamat_sd / $total) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-
-                                                            {{-- Data dan persentase untuk perempuan --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $data->perempuan_tamat_sd }}</td>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total > 0)
-                                                                    {{ round(($data->perempuan_tamat_sd / $total) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-                                                        </tr>
-                                                        {{-- SLTP --}}
-                                                        <tr>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $nomor++ }}</td>
-                                                            <td style="border: 1px solid black;">
-                                                                SLTP/SEDERAJAT</td>
-
-                                                            @php
-                                                                // Hitung total laki-laki dan perempuan di SLTP
-                                                                $total = $data->laki_sltp + $data->perempuan_sltp;
-                                                            @endphp
-
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $total }}</td>
-
-                                                            {{-- Persentase total laki-laki dan perempuan --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total_population > 0)
-                                                                    {{ round(($total / $total_population) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-
-                                                            {{-- Data dan persentase untuk laki-laki --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $data->laki_sltp }}</td>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total > 0)
-                                                                    {{ round(($data->laki_sltp / $total) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-
-                                                            {{-- Data dan persentase untuk perempuan --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $data->perempuan_sltp }}</td>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total > 0)
-                                                                    {{ round(($data->perempuan_sltp / $total) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-                                                        </tr>
-                                                        {{-- SLTA --}}
-                                                        <tr>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $nomor++ }}</td>
-                                                            <td style="border: 1px solid black;">
-                                                                SLTA / SEDERAJAT</td>
-
-                                                            @php
-                                                                // Hitung total laki-laki dan perempuan di SLTA
-                                                                $total = $data->laki_slta + $data->perempuan_slta;
-                                                            @endphp
-
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $total }}</td>
-
-                                                            {{-- Persentase total laki-laki dan perempuan --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total_population > 0)
-                                                                    {{ round(($total / $total_population) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-
-                                                            {{-- Data dan persentase untuk laki-laki --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $data->laki_slta }}</td>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total > 0)
-                                                                    {{ round(($data->laki_slta / $total) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-
-                                                            {{-- Data dan persentase untuk perempuan --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $data->perempuan_slta }}</td>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total > 0)
-                                                                    {{ round(($data->perempuan_slta / $total) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-                                                        </tr>
-                                                        {{-- DIPLOMA I / II --}}
-                                                        <tr>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $nomor++ }}</td>
-                                                            <td style="border: 1px solid black;">
-                                                                DIPLOMA I / II</td>
-
-                                                            @php
-                                                                // Hitung total laki-laki dan perempuan di SLTA
-                                                                $total =
-                                                                    $data->laki_diploma_1_2 +
-                                                                    $data->perempuan_diploma_1_2;
-                                                            @endphp
-
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $total }}</td>
-
-                                                            {{-- Persentase total laki-laki dan perempuan --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total_population > 0)
-                                                                    {{ round(($total / $total_population) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-
-                                                            {{-- Data dan persentase untuk laki-laki --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $data->laki_diploma_1_2 }}</td>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total > 0)
-                                                                    {{ round(($data->laki_diploma_1_2 / $total) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-
-                                                            {{-- Data dan persentase untuk perempuan --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $data->perempuan_diploma_1_2 }}</td>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total > 0)
-                                                                    {{ round(($data->perempuan_diploma_1_2 / $total) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-                                                        </tr>
-                                                        {{-- AKADEMI/ DIPLOMA III/S. MUDA --}}
-                                                        <tr>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $nomor++ }}</td>
-                                                            <td style="border: 1px solid black;">
-                                                                AKADEMI/ DIPLOMA III/S. MUDA</td>
-
-                                                            @php
-                                                                // Hitung total laki-laki dan perempuan di SLTA
-                                                                $total =
-                                                                    $data->laki_diploma_3 + $data->perempuan_diploma_3;
-                                                            @endphp
-
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $total }}</td>
-
-                                                            {{-- Persentase total laki-laki dan perempuan --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total_population > 0)
-                                                                    {{ round(($total / $total_population) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-
-                                                            {{-- Data dan persentase untuk laki-laki --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $data->laki_diploma_3 }}</td>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total > 0)
-                                                                    {{ round(($data->laki_diploma_3 / $total) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-
-                                                            {{-- Data dan persentase untuk perempuan --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $data->perempuan_diploma_3 }}</td>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total > 0)
-                                                                    {{ round(($data->perempuan_diploma_3 / $total) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-                                                        </tr>
-                                                        {{-- DIPLOMA IV/ STRATA I --}}
-                                                        <tr>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $nomor++ }}</td>
-                                                            <td style="border: 1px solid black;">
-                                                                DIPLOMA IV/ STRATA I</td>
-
-                                                            @php
-                                                                // Hitung total laki-laki dan perempuan di SLTA
-                                                                $total =
-                                                                    $data->laki_diploma_4_strata_1 +
-                                                                    $data->perempuan_diploma_4_strata_1;
-                                                            @endphp
-
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $total }}</td>
-
-                                                            {{-- Persentase total laki-laki dan perempuan --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total_population > 0)
-                                                                    {{ round(($total / $total_population) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-
-                                                            {{-- Data dan persentase untuk laki-laki --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $data->laki_diploma_4_strata_1 }}</td>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total > 0)
-                                                                    {{ round(($data->laki_diploma_4_strata_1 / $total) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-
-                                                            {{-- Data dan persentase untuk perempuan --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $data->perempuan_diploma_4_strata_1 }}</td>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total > 0)
-                                                                    {{ round(($data->perempuan_diploma_4_strata_1 / $total) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-                                                        </tr>
-                                                        {{-- STRATA II --}}
-                                                        <tr>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $nomor++ }}</td>
-                                                            <td style="border: 1px solid black;">
-                                                                STRATA II</td>
-
-                                                            @php
-                                                                // Hitung total laki-laki dan perempuan di SLTA
-                                                                $total =
-                                                                    $data->laki_strata_2 + $data->perempuan_strata_2;
-                                                            @endphp
-
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $total }}</td>
-
-                                                            {{-- Persentase total laki-laki dan perempuan --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total_population > 0)
-                                                                    {{ round(($total / $total_population) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-
-                                                            {{-- Data dan persentase untuk laki-laki --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $data->laki_strata_2 }}</td>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total > 0)
-                                                                    {{ round(($data->laki_strata_2 / $total) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-
-                                                            {{-- Data dan persentase untuk perempuan --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $data->perempuan_strata_2 }}</td>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total > 0)
-                                                                    {{ round(($data->perempuan_strata_2 / $total) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-                                                        </tr>
-                                                        {{-- STRATA III --}}
-                                                        <tr>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $nomor++ }}</td>
-                                                            <td style="border: 1px solid black;">
-                                                                STRATA III</td>
-
-                                                            @php
-                                                                // Hitung total laki-laki dan perempuan di SLTA
-                                                                $total =
-                                                                    $data->laki_strata_3 + $data->perempuan_strata_3;
-                                                            @endphp
-
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $total }}</td>
-
-                                                            {{-- Persentase total laki-laki dan perempuan --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total_population > 0)
-                                                                    {{ round(($total / $total_population) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-
-                                                            {{-- Data dan persentase untuk laki-laki --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $data->laki_strata_3 }}</td>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total > 0)
-                                                                    {{ round(($data->laki_strata_3 / $total) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-
-                                                            {{-- Data dan persentase untuk perempuan --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $data->perempuan_strata_3 }}</td>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total > 0)
-                                                                    {{ round(($data->perempuan_strata_3 / $total) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-                                                        </tr>
-                                                        {{-- Belum Mengisi --}}
-                                                        <tr>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $nomor++ }}</td>
-                                                            <td style="border: 1px solid black;">
-                                                                Belum Mengisi</td>
-
-                                                            @php
-                                                                // Hitung total laki-laki dan perempuan di SLTA
-                                                                $total =
-                                                                    $data->laki_belum_mengisi +
-                                                                    $data->perempuan_belum_mengisi;
-                                                            @endphp
-
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $total }}</td>
-
-                                                            {{-- Persentase total laki-laki dan perempuan --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total_population > 0)
-                                                                    {{ round(($total / $total_population) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-
-                                                            {{-- Data dan persentase untuk laki-laki --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $data->laki_belum_mengisi }}</td>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total > 0)
-                                                                    {{ round(($data->laki_belum_mengisi / $total) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-
-                                                            {{-- Data dan persentase untuk perempuan --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $data->perempuan_belum_mengisi }}</td>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total > 0)
-                                                                    {{ round(($data->perempuan_belum_mengisi / $total) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-                                                        </tr>
-                                                        {{-- Total --}}
-                                                        <tr>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $nomor++ }}</td>
-                                                            <td style="border: 1px solid black;">
-                                                                TOTAL RT {{ $data->identitasRt->nomor_rt ?? '000' }} RW
-                                                                {{ $data->identitasRt->nomor_rw ?? '000' }} DUSUN
-                                                                {{ $data->identitasRt->dusun ?? '1' }}
-                                                            </td>
-
-                                                            @php
-                                                                // Hitung total laki-laki dan perempuan
-                                                                $total = $data->laki_laki + $data->perempuan; // Asumsikan $data memiliki atribut laki_laki dan perempuan
-                                                            @endphp
-
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $total }}</td>
-
-                                                            {{-- Persentase total laki-laki dan perempuan --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total_population > 0)
-                                                                    {{ round(($total / $total_population) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-
-                                                            {{-- Data dan persentase untuk laki-laki --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $data->laki_laki }}</td>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total > 0)
-                                                                    {{ round(($data->laki_laki / $total) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-
-                                                            {{-- Data dan persentase untuk perempuan --}}
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                {{ $data->perempuan }}</td>
-                                                            <td class="text-center" style="border: 1px solid black;">
-                                                                @if ($total > 0)
-                                                                    {{ round(($data->perempuan / $total) * 100, 2) }}%
-                                                                @else
-                                                                    0%
-                                                                @endif
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                @endif
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                        @endif
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1098,5 +416,4 @@
             window.location.href = url;
         }
     </script>
-
 @endsection

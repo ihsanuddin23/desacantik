@@ -36,7 +36,49 @@
                             Data Desa <b class="caret"></b> </a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ route('frontend.identitasrt') }}">Identitas RT</a></li>
-                            <li><a href="{{ route('frontend.demografirt') }}">Demografi RT</a></li>
+                            <div class="dropdown">
+                                <button data-mdb-button-init data-mdb-ripple-init data-mdb-dropdown-init
+                                    class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-mdb-toggle="dropdown" aria-expanded="false">
+                                    Dropdown button
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">Another action</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">
+                                            Submenu &raquo;
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-submenu">
+                                            <li>
+                                                <a class="dropdown-item" href="#">Submenu item 1</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Submenu item 2</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Submenu item 3 &raquo; </a>
+                                                <ul class="dropdown-menu dropdown-submenu">
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">Multi level 1</a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" href="#">Multi level 2</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Submenu item 4</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">Submenu item 5</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
                             <li><a href="{{ route('frontend.demografi') }}">Sosial Ekonomi RT</a>
                             </li>
                             <li><a href="{{ route('frontend.demografi') }}">Karakteristik RT</a>

@@ -42,6 +42,9 @@
                                         <th class="text-center">Dusun</th>
                                         <th class="text-center">Nama Ketua RT</th>
                                         <th class="text-center">Jumlah KK</th>
+                                        <th class="text-center">Jumlah Laki-laki</th>
+                                        <th class="text-center">Jumlah Perempuan</th>
+                                        <th class="text-center">Jumlah Penduduk</th>
 
                                         <th class="text-center">Actions</th>
                                     </tr>
@@ -55,8 +58,12 @@
                                             <td>{{ $identitas->nomor_rt }}</td>
                                             <td>{{ $identitas->nomor_rw }}</td>
                                             <td>{{ $identitas->dusun }}</td>
-                                            <td>{{ $identitas->nama_ketua_rt }}</td>
+                                            <td>{{ ucwords(strtolower($identitas->nama_ketua_rt)) }}</td>
+
                                             <td>{{ $identitas->jumlah_kk }}</td>
+                                            <td>{{ $identitas->laki_laki }}</td>
+                                            <td>{{ $identitas->perempuan }}</td>
+                                            <td>{{ $identitas->perempuan + $identitas->laki_laki }}</td>
                                             <td class="text-center">
                                                 <a href="{{ route('dashboard.identitasrt.show', $identitas->id) }}"
                                                     class="btn btn-info">Show</a>
@@ -112,8 +119,7 @@
                                         <th class="text-center">Nomor RW</th>
                                         <th class="text-center">Dusun</th>
                                         <th class="text-center">Nama RT</th>
-                                        <th class="text-center">Jumlah Laki-laki</th>
-                                        <th class="text-center">Jumlah Perempuan</th>
+                                        <th class="text-center">Jumlah</th>
                                         <th class="text-center">Actions</th>
                                     </tr>
                                 </thead>
@@ -126,9 +132,9 @@
                                             <td>{{ $pendidikan->identitasRt->nomor_rt ?? '-' }}</td>
                                             <td>{{ $pendidikan->identitasRt->nomor_rw ?? '-' }}</td>
                                             <td>{{ $pendidikan->identitasRt->dusun ?? '-' }}</td>
-                                            <td>{{ $pendidikan->identitasRt->nama_ketua_rt ?? '-' }}</td>
-                                            <td>{{ $pendidikan->laki_laki }}</td>
-                                            <td>{{ $pendidikan->perempuan }}</td>
+                                            <td>{{ ucwords(strtolower($pendidikan->identitasRt->nama_ketua_rt)) ?? '-' }}
+                                            </td>
+                                            <td>{{ $pendidikan->total }}</td>
 
                                             <td class="text-center">
                                                 <a href="{{ route('dashboard.pendidikanrt.show', $pendidikan->id) }}"
@@ -164,6 +170,77 @@
                 </div>
             </div>
         </div>
+        {{-- Pekerjaan RT --}}
+        <div class="row">
+            <div class="col-12 ml-2"> <!-- Menambahkan ml-2 untuk memberi jarak -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Daftar Pekerjaan RT</h3>
+                        <div class="card-tools">
+                            <a href="{{ route('dashboard.pekerjaanrt.create') }}" class="btn btn-primary">Add New
+                                Pekerjaan RT</a>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">No</th>
+                                        <th class="text-center">Nomor RT</th>
+                                        <th class="text-center">Nomor RW</th>
+                                        <th class="text-center">Dusun</th>
+                                        <th class="text-center">Nama RT</th>
+                                        <th class="text-center">Jumlah Penduduk</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse ($pekerjaanrt as $index => $pekerjaan)
+                                        <tr>
+                                            <td class="text-center">
+                                                {{ ($pekerjaanrt->currentPage() - 1) * $pekerjaanrt->perPage() + $loop->iteration }}
+                                            </td>
+                                            <td>{{ $pekerjaan->identitasRt->nomor_rt ?? '-' }}</td>
+                                            <td>{{ $pekerjaan->identitasRt->nomor_rw ?? '-' }}</td>
+                                            <td>{{ $pekerjaan->identitasRt->dusun ?? '-' }}</td>
+                                            <td>{{ $pekerjaan->identitasRt->nama_ketua_rt ?? '-' }}</td>
+                                            <td>{{ $pekerjaan->jumlah_penduduk ?? '0' }}</td>
+                                            <td class="text-center">
+                                                <a href="{{ route('dashboard.pekerjaanrt.show', $pekerjaan->id) }}"
+                                                    class="btn btn-info">Show</a>
+                                                <a href="{{ route('dashboard.pekerjaanrt.edit', $pekerjaan->id) }}"
+                                                    class="btn btn-warning">Edit</a>
+                                                <form
+                                                    action="{{ route('dashboard.pekerjaanrt.destroy', $pekerjaan->id) }}"
+                                                    method="POST" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger deletebtn"
+                                                        data-entity="Pekerjaan RT">Delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="8" class="text-center">Data Pekerjaan RT Kosong!</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card-footer clearfix">
+                        <div class="float-right">
+                            {{ $pekerjaanrt->links() }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     @section('script')

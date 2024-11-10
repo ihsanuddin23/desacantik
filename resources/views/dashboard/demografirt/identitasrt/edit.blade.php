@@ -73,6 +73,16 @@
                                         <input type="number" class="form-control" id="jumlah_kk" name="jumlah_kk"
                                             value="{{ old('jumlah_kk', $identitasRt->jumlah_kk) }}">
                                     </div>
+                                    <div class="form-group">
+                                        <label for="laki_laki">Jumlah Laki-laki</label>
+                                        <input type="number" class="form-control" id="laki_laki" name="laki_laki"
+                                            value="{{ old('laki_laki', $identitasRt->laki_laki) }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="perempuan">Jumlah Perempuan</label>
+                                        <input type="number" class="form-control" id="perempuan" name="perempuan"
+                                            value="{{ old('perempuan', $identitasRt->perempuan) }}">
+                                    </div>
 
                                     <div class="form-group">
                                         <label for="tanggal_lahir_ketua_rt">Tanggal Lahir Ketua RT</label>

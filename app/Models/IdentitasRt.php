@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\PendidikanRT;
+use App\Models\PekerjaanRt;
 
 class IdentitasRt extends Model
 {
@@ -20,6 +21,8 @@ class IdentitasRt extends Model
         'dusun',
         'nama_ketua_rt',
         'jumlah_kk',
+        'laki_laki',
+        'perempuan',
         'tanggal_lahir_ketua_rt',
         'pendidikan_ketua_rt',
         'pekerjaan_ketua_rt',
@@ -29,5 +32,13 @@ class IdentitasRt extends Model
     public function pendidikanRt()
     {
         return $this->hasMany(PendidikanRt::class, 'identitasrt_id');
+    }
+    public function pekerjaanRt()
+    {
+        return $this->hasMany(PekerjaanRt::class, 'identitasrt_id');
+    }
+    public function getNomorTeleponKetuaRtFormattedAttribute()
+    {
+        return preg_replace('/(\d{4})(\d{4})(\d+)/', '$1-$2-$3', $this->nomor_telepon_ketua_rt);
     }
 }

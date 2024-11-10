@@ -87,19 +87,6 @@
         <div class="container">
             <div class="">
                 <div class="statistik-widget owl-carousel">
-                    <div class="item">
-                        <div class="stat-box bg-info">
-                            <div class="inner">
-                                <div class="stat-value">
-                                    {{ number_format($totalPenduduk, 0, ',', '.') }}
-                                </div>
-                                <p class="stat-title">Penduduk</p>
-                            </div>
-                            <div class="icon">
-                                <i class="fa fa-user"></i>
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="item">
                         <div class="stat-box bg-info">
@@ -112,7 +99,39 @@
                             </div>
                         </div>
                     </div>
-
+                    <div class="item">
+                        <div class="stat-box bg-info">
+                            <div class="inner">
+                                <div class="stat-value">{{ number_format($totalpenduduk, 0, ',', '.') }}</div>
+                                <p class="stat-title">Jumlah Penduduk</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-users"></i> <!-- Ikon total penduduk -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="stat-box bg-info">
+                            <div class="inner">
+                                <div class="stat-value">{{ number_format($totallaki, 0, ',', '.') }}</div>
+                                <p class="stat-title">Jumlah Laki-laki</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-male"></i> <!-- Ikon laki-laki -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="stat-box bg-info">
+                            <div class="inner">
+                                <div class="stat-value">{{ number_format($totalperempuan, 0, ',', '.') }}</div>
+                                <p class="stat-title">Jumlah Perempuan</p>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-female"></i> <!-- Ikon perempuan -->
+                            </div>
+                        </div>
+                    </div>
                     <div class="item">
                         <div class="stat-box bg-danger">
                             <div class="inner">
@@ -550,55 +569,24 @@
                         <div class="subtitle">Saksikan keindahan dan keunikannya</div>
                     </div>
                     <div class="slidepotensi owl-carousel owl-theme">
-                        <div class="blog-image">
-                            <a
-                                href="https://cikedokan.sidepe.com/berita/detail/potensi-dan-produk-desa/umkm-desa-cikedokan-dewi-kurnia-fashion">
-                                <img src="https://cikedokan.sidepe.com/timthumb.php?src=https://cikedokan.sidepe.com/desa/upload/artikel/sedang_1665373649_sedang_1665131417_3.jpg&w=600&h=350&q=100"
-                                    class="img-responsive img-potensi" alt="UMKM  Desa CikedoKan  DEWI KURNIA FASHION">
-                            </a>
-                            <div class="caption-pengumuman">
-                                <div class="title-pengumuman"><a
-                                        href="https://cikedokan.sidepe.com/berita/detail/potensi-dan-produk-desa/umkm-desa-cikedokan-dewi-kurnia-fashion">UMKM
-                                        Desa CikedoKan DEWI KURNIA FASHION</a></div>
+                        @foreach ($postMakanan as $post)
+                            <div class="blog-image">
+                                <a href="{{ route('frontend.post', ['slug' => $post->slug]) }}">
+                                    <img src="{{ asset('uploads/post/' . $post->thumbnail) }}"
+                                        class="img-responsive img-potensi" alt="{{ $post->title }}">
+                                </a>
+                                <div class="caption-pengumuman">
+                                    <div class="title-pengumuman"><a
+                                            href="{{ route('frontend.post', ['slug' => $post->slug]) }}">{{ $post->title }}</a>
+                                    </div>
+                                </div>
+                                <div class="meta-pengumuman">
+                                    <div class="tgl-pengumuman">{{ $post->created_at->format('d F Y H:i:s') }}</div>
+                                </div>
                             </div>
-                            <div class="meta-pengumuman">
-                                <div class="tgl-pengumuman">
-                                    10 Oktober 2022 10:47:01 </div>
-                            </div>
-                        </div>
-                        <div class="blog-image">
-                            <a
-                                href="https://cikedokan.sidepe.com/berita/detail/potensi-dan-produk-desa/singkong-goreng-balado-yang-sehat-dan-bikin-tubuh-langsing">
-                                <img src="https://cikedokan.sidepe.com/timthumb.php?src=https://cikedokan.sidepe.com/desa/upload/artikel/sedang_1659367726_Singkong-Balado-resep.jpg&w=600&h=350&q=100"
-                                    class="img-responsive img-potensi"
-                                    alt=" Singkong Goreng Balado yang Sehat dan Bikin Tubuh Langsing">
-                            </a>
-                            <div class="caption-pengumuman">
-                                <div class="title-pengumuman"><a
-                                        href="https://cikedokan.sidepe.com/berita/detail/potensi-dan-produk-desa/singkong-goreng-balado-yang-sehat-dan-bikin-tubuh-langsing">Singkong
-                                        Goreng Balado yang Sehat dan Bikin&#8230;</a></div>
-                            </div>
-                            <div class="meta-pengumuman">
-                                <div class="tgl-pengumuman">
-                                    01 Agustus 2022 22:28:46 </div>
-                            </div>
-                        </div>
-                        <div class="blog-image">
-                            <a href="https://cikedokan.sidepe.com/berita/detail/potensi-dan-produk-desa/dodol-khas-betawi">
-                                <img src="https://cikedokan.sidepe.com/timthumb.php?src=https://cikedokan.sidepe.com/desa/upload/artikel/sedang_1659028012_dodol.jpg&w=600&h=350&q=100"
-                                    class="img-responsive img-potensi" alt="Dodol Khas Betawi">
-                            </a>
-                            <div class="caption-pengumuman">
-                                <div class="title-pengumuman"><a
-                                        href="https://cikedokan.sidepe.com/berita/detail/potensi-dan-produk-desa/dodol-khas-betawi">Dodol
-                                        Khas Betawi</a></div>
-                            </div>
-                            <div class="meta-pengumuman">
-                                <div class="tgl-pengumuman">
-                                    29 Juli 2022 00:06:52 </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
+
                 </div>
             </div>
         </div>
@@ -744,73 +732,71 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="container-default bg-white">
-            <div class="container">
-                <div class="section-sinergi">
-                    <div class="sinergi-slide">
-                        <div class="slidesinergi owl-carousel owl-theme">
-                            <div class="blog-image">
-                                <a href="" target="_blank">
-                                    <img src="https://cikedokan.sidepe.com/desa/upload/widget/1656566932_34567.jpg"
-                                        class="img-responsive center sinergi-image" alt="Image 1">
-                                </a>
-                            </div>
-                            <div class="blog-image">
-                                <a href="" target="_blank">
-                                    <img src="https://cikedokan.sidepe.com/desa/upload/widget/1656566932_Brown-Aesthetic-Farm-Stay-Accommodation-Facebook-Cover(3).jpg"
-                                        class="img-responsive center sinergi-image" alt="Image 2">
-                                </a>
-                            </div>
-                            <div class="blog-image">
-                                <a href="" target="_blank">
-                                    <img src="https://cikedokan.sidepe.com/desa/upload/widget/1654843487_sdgsdg1.png"
-                                        class="img-responsive center sinergi-image" alt="Image 3">
-                                </a>
-                            </div>
-                            <div class="blog-image">
-                                <a href="" target="_blank">
-                                    <img src="https://cikedokan.sidepe.com/desa/upload/widget/1654843639_wertr.jpg"
-                                        class="img-responsive center sinergi-image" alt="Image 4">
-                                </a>
-                            </div>
-                            <div class="blog-image">
-                                <a href="" target="_blank">
-                                    <img src="https://cikedokan.sidepe.com/desa/upload/widget/1654843923_sedang_D6IaUK_SDGs+Desa.jpg"
-                                        class="img-responsive center sinergi-image" alt="Image 5">
-                                </a>
-                            </div>
-                            <div class="blog-image">
-                                <a href="" target="_blank">
-                                    <img src="https://cikedokan.sidepe.com/desa/upload/widget/1652664035_jaabr-desa-digital.png"
-                                        class="img-responsive center sinergi-image" alt="Image 6">
-                                </a>
-                            </div>
-                            <div class="blog-image">
-                                <a href="" target="_blank">
-                                    <img src="https://cikedokan.sidepe.com/desa/upload/widget/1652663985_jabar-digital.png"
-                                        class="img-responsive center sinergi-image" alt="Image 7">
-                                </a>
-                            </div>
-                            <div class="blog-image">
-                                <a href="" target="_blank">
-                                    <img src="https://cikedokan.sidepe.com/desa/upload/widget/1593537087_WhatsApp-Image-2020-06-29-at-13.21.49.jpeg"
-                                        class="img-responsive center sinergi-image" alt="Image 8">
-                                </a>
-                            </div>
-                            <div class="blog-image">
-                                <a href="" target="_blank">
-                                    <img src="https://cikedokan.sidepe.com/desa/upload/widget/1593537087_WhatsApp-Image-2020-06-29-at-13.21.44.jpeg"
-                                        class="img-responsive center sinergi-image" alt="Image 9">
-                                </a>
-                            </div>
+    <div class="container-default bg-white">
+        <div class="container">
+            <div class="section-sinergi">
+                <div class="sinergi-slide">
+                    <div class="slidesinergi owl-carousel owl-theme">
+                        <div class="blog-image-desa">
+                            <a href="" target="_blank">
+                                <img src="https://cikedokan.sidepe.com/desa/upload/widget/1656566932_34567.jpg"
+                                    class="img-responsive center sinergi-image-desa">
+                            </a>
+                        </div>
+                        <div class="blog-image-desa">
+                            <a href="" target="_blank">
+                                <img src="https://cikedokan.sidepe.com/desa/upload/widget/1656566932_Brown-Aesthetic-Farm-Stay-Accommodation-Facebook-Cover(3).jpg"
+                                    class="img-responsive center sinergi-image-desa">
+                            </a>
+                        </div>
+                        <div class="blog-image-desa">
+                            <a href="" target="_blank">
+                                <img src="https://cikedokan.sidepe.com/desa/upload/widget/1654843487_sdgsdg1.png"
+                                    class="img-responsive center sinergi-image-desa">
+                            </a>
+                        </div>
+                        <div class="blog-image-desa">
+                            <a href="" target="_blank">
+                                <img src="https://cikedokan.sidepe.com/desa/upload/widget/1654843639_wertr.jpg"
+                                    class="img-responsive center sinergi-image-desa">
+                            </a>
+                        </div>
+                        <div class="blog-image-desa">
+                            <a href="" target="_blank">
+                                <img src="https://cikedokan.sidepe.com/desa/upload/widget/1654843923_sedang_D6IaUK_SDGs+Desa.jpg"
+                                    class="img-responsive center sinergi-image-desa">
+                            </a>
+                        </div>
+                        <div class="blog-image-desa">
+                            <a href="" target="_blank">
+                                <img src="https://cikedokan.sidepe.com/desa/upload/widget/1652664035_jaabr-desa-digital.png"
+                                    class="img-responsive center sinergi-image-desa">
+                            </a>
+                        </div>
+                        <div class="blog-image-desa">
+                            <a href="" target="_blank">
+                                <img src="https://cikedokan.sidepe.com/desa/upload/widget/1652663985_jabar-digital.png"
+                                    class="img-responsive center sinergi-image-desa">
+                            </a>
+                        </div>
+                        <div class="blog-image-desa">
+                            <a href="" target="_blank">
+                                <img src="https://cikedokan.sidepe.com/desa/upload/widget/1593537087_WhatsApp-Image-2020-06-29-at-13.21.49.jpeg"
+                                    class="img-responsive center sinergi-image-desa">
+                            </a>
+                        </div>
+                        <div class="blog-image-desa">
+                            <a href="" target="_blank">
+                                <img src="https://cikedokan.sidepe.com/desa/upload/widget/1593537087_WhatsApp-Image-2020-06-29-at-13.21.44.jpeg"
+                                    class="img-responsive center sinergi-image-desa">
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
     </div>
 @endsection
 
@@ -866,6 +852,7 @@
             });
         });
     </script>
+
 
     <script>
         jQuery(document).ready(function($) {

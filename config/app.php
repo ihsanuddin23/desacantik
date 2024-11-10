@@ -155,21 +155,25 @@ return [
     | this array to grant expanded functionality to your applications.
     |
     */
-
     'providers' => ServiceProvider::defaultProviders()->merge([
         /*
-         * Package Service Providers...
-         */
+     * Package Service Providers...
+     */
+        Barryvdh\DomPDF\ServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,  // Tambahkan di sini
+        /*
 
         /*
-         * Application Service Providers...
-         */
+     * Application Service Providers...
+     */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
     ])->toArray(),
+
 
     /*
     |--------------------------------------------------------------------------
@@ -183,7 +187,10 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'Example' => App\Facades\Example::class,
+        'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+
     ])->toArray(),
+
 
 ];

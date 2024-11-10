@@ -5839,3 +5839,29 @@ tspan {
     font-size: 12px;
     padding-bottom: 10px;
 }
+.sinergi-image-desa {
+    width: 100% !important;
+    /* Mengisi lebar kontainer */
+    
+    height: 100px !important;
+    /* Tinggi tetap */
+    
+    object-fit: contain !important;
+    /* Menjaga gambar sepenuhnya terlihat */
+}
+.blog-image-desa {
+    height: 100px !important;
+    /* Tinggi kontainer */
+    
+    overflow: hidden !important;
+    /* Sembunyikan bagian gambar yang keluar */
+    
+    display: flex;
+    /* Mengaktifkan flexbox */
+    
+    align-items: center;
+    /* Vertikal centering */
+    
+    justify-content: center;
+    /* Horizontal centering */
+}

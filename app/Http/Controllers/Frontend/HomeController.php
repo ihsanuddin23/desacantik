@@ -25,6 +25,15 @@ class HomeController extends Controller
         ]);
         // Menghitung total pengunjung
         $totalPengunjung = Visitor::count(); // Menghitung jumlah pengunjung yang ada
+        // Ambil kategori dengan judul "Makanan, Minuman Dan Tempat"
+        $kategoriMakanan = Category::where('title', 'Makanan, Minuman Dan Tempat')->first();
+        // Ambil posting berdasarkan kategori tersebut
+        $postMakanan = Post::with('category')
+            ->where('status', true)
+            ->where('category_id', $kategoriMakanan->id) // Pastikan Anda memiliki kolom category_id di tabel Post
+            ->orderBy('id', 'DESC')
+            ->limit(10) // Ambil 10 posting, sesuaikan dengan kebutuhan
+            ->get();
 
         $recentposts = Post::with("category")->where("status", true)->orderBy("id", "DESC")->paginate(10);
         $featuredposts = Post::with(["category", "user"])->where("status", true)->where("is_featured", true)->orderBy("id", "DESC")->limit(10)->get();
@@ -37,13 +46,15 @@ class HomeController extends Controller
         // return view("frontend.home.index", compact("recentposts", "featuredposts", "categories"));
         $pemerintahdesa = Pemerintah::all();
         // Menghitung total penduduk dari PendidikanRT
-        $totalPenduduk = PendidikanRT::sum('laki_laki') + PendidikanRT::sum('perempuan');
 
         // Menghitung jumlah dusun,rt,rw, jumlah kk unik dari IdentitasRt
         $totalDusun = IdentitasRt::distinct()->count('dusun');
         $totalRt = IdentitasRt::count('nomor_rt');
         $totalRw = IdentitasRt::distinct('nomor_rw')->count('nomor_rw');
         $totalKK = IdentitasRt::sum('jumlah_kk');
-        return view("frontend2.home.index", compact("popularposts", "recentposts", "featuredposts", "categories", "pemerintahdesa", "totalPenduduk", "totalDusun", "totalRt", "totalRw", "totalKK", "totalPengunjung"));
+        $totallaki = IdentitasRt::sum('laki_laki');
+        $totalperempuan = IdentitasRt::sum('perempuan');
+        $totalpenduduk = $totallaki + $totalperempuan;
+        return view("frontend2.home.index", compact("popularposts", "recentposts", "featuredposts", "categories", "pemerintahdesa",  "totalDusun", "totalRt", "totalRw", "totalKK", "totalPengunjung", "postMakanan", "kategoriMakanan", "totallaki", "totalperempuan", "totalpenduduk"));
     }
 }

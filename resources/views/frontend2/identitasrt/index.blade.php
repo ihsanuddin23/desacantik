@@ -34,10 +34,13 @@
                                     <table id="identitasRtTable" class="table table-bordered table-striped table-hover">
                                         <thead class="thead-dark">
                                             <tr>
-                                                <th style="width: 30%;">Dusun</th>
-                                                <th style="width: 20%;">RT</th>
-                                                <th style="width: 20%;">RW</th>
+                                                <th style="width: 10%;">Dusun</th>
+                                                <th style="width: 10%;">RT</th>
+                                                <th style="width: 10%;">RW</th>
                                                 <th style="width: 20%;">Nama Ketua RT</th>
+                                                <th style="width: 20%;">Jumlah Keluarga</th>
+                                                <th style="width: 20%;">Jumlah Laki-laki</th>
+                                                <th style="width: 20%;">Jumlah Perempuan</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -47,6 +50,9 @@
                                                     <td>{{ $identitas->nomor_rt }}</td>
                                                     <td>{{ $identitas->nomor_rw }}</td>
                                                     <td>{{ $identitas->nama_ketua_rt }}</td>
+                                                    <td>{{ $identitas->jumlah_kk }}</td>
+                                                    <td>{{ $identitas->laki_laki }}</td>
+                                                    <td>{{ $identitas->perempuan }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>

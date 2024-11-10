@@ -45,15 +45,23 @@
                                     </tr>
                                     <tr>
                                         <th>Nama Ketua RT</th>
-                                        <td>{{ $identitasRt->nama_ketua_rt }}</td>
+                                        <td>{{ ucwords(strtolower($identitasRt->nama_ketua_rt)) }}</td>
                                     </tr>
                                     <tr>
                                         <th>Jumlah KK</th>
                                         <td>{{ $identitasRt->jumlah_kk }}</td>
                                     </tr>
                                     <tr>
+                                        <th>Jumlah Laki-laki</th>
+                                        <td>{{ $identitasRt->laki_laki }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Jumlah Perempuan</th>
+                                        <td>{{ $identitasRt->perempuan }}</td>
+                                    </tr>
+                                    <tr>
                                         <th>Tanggal Lahir Ketua RT</th>
-                                        <td>{{ $identitasRt->tanggal_lahir_ketua_rt ? \Carbon\Carbon::parse($identitasRt->tanggal_lahir_ketua_rt)->format('d M Y') : '-' }}
+                                        <td>{{ $identitasRt->tanggal_lahir_ketua_rt? \Carbon\Carbon::parse($identitasRt->tanggal_lahir_ketua_rt)->locale('id')->isoFormat('D MMMM YYYY'): '-' }}
                                         </td>
                                     </tr>
                                     <tr>
@@ -66,7 +74,7 @@
                                     </tr>
                                     <tr>
                                         <th>Nomor Telepon Ketua RT</th>
-                                        <td>{{ $identitasRt->nomor_telepon_ketua_rt }}</td>
+                                        <td>{{ $identitasRt->nomor_telepon_ketua_rt_formatted }}</td>
                                     </tr>
                                 </tbody>
                             </table>

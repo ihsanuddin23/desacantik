@@ -14,7 +14,16 @@ use App\Models\SaranaTempatTinggal;
 use App\Models\SaranaTransportasi; // Import the SaranaTransportasi model
 use App\Models\SaranaUsaha;
 use App\Models\Usaha;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use Intervention\Image\Image;
+
+
+use App\Exports\PendidikanRTExport;
+
+
 
 class DemografiRtController extends Controller
 {
@@ -32,46 +41,107 @@ class DemografiRtController extends Controller
         // Fetch identitas RT
         $identitasrt = IdentitasRt::all();
 
+        // Initialize selectedIdentitasrt variable
+        $selectedIdentitasrt = null;
 
-        // Pendidikan RT data with filtering
+        // Check if identitasrt_id exists in request and find the corresponding IdentitasRt record
         if ($request->input('identitasrt_id')) {
-            // Filter berdasarkan identitasrt_id yang dipilih
-            $pendidikanrt = PendidikanRT::where('identitasrt_id', $request->input('identitasrt_id'))->get();
+            $selectedIdentitasrt = IdentitasRt::find($request->input('identitasrt_id'));
+            // Filter data sesuai dengan identitasrt_id yang dipilih
+            $filteredData = PendidikanRT::where('identitasrt_id', $request->input('identitasrt_id'))->get();
         } else {
-            // Ambil data dengan identitasrt_id 1 jika tidak ada RT yang dipilih
-            $pendidikanrt = PendidikanRT::where('identitasrt_id', 1)->get();
+            // Jika tidak ada filter, ambil semua data PendidikanRT
+            $filteredData = PendidikanRT::all();
         }
+
         // Mengambil data pendidikan untuk laki-laki dan perempuan
-        $pendidikanRtData = PendidikanRt::select(
-            'laki_laki',
-            'laki_belum_sekolah',
-            'laki_belum_tamat_sd',
-            'laki_tamat_sd',
-            'laki_sltp',
-            'laki_slta',
-            'laki_diploma_1_2',
-            'laki_diploma_3',
-            'laki_diploma_4_strata_1',
-            'laki_strata_2',
-            'laki_strata_3',
-            'laki_belum_mengisi',
-            'perempuan',
-            'perempuan_belum_sekolah',
-            'perempuan_belum_tamat_sd',
-            'perempuan_tamat_sd',
-            'perempuan_sltp',
-            'perempuan_slta',
-            'perempuan_diploma_1_2',
-            'perempuan_diploma_3',
-            'perempuan_diploma_4_strata_1',
-            'perempuan_strata_2',
-            'perempuan_strata_3',
-            'perempuan_belum_mengisi'
+        $pendidikanRtData = PendidikanRT::select(
+            'identitasrt_id',
+            'total',
+            'tidak_tamat_sd',
+            'tamat_sd',
+            'tamat_smp',
+            'tamat_sma',
+            'tamat_perguruan_tinggi'
         )->get();
 
-        // Hitung total populasi dengan menjumlahkan semua kolom
-        $total_population = PendidikanRt::sum('laki_laki') + PendidikanRt::sum('perempuan');
+        return view("frontend2.pendidikanrt.index", compact(
+            "recentposts",
+            "featuredposts",
+            "categories",
+            "filteredData",
+            "identitasrt",
+            "pendidikanRtData",
+            "selectedIdentitasrt"
+        ));
+    }
 
-        return view("frontend2.pendidikanrt.index", compact("recentposts", "featuredposts", "categories", "pendidikanrt", "total_population", "identitasrt", "pendidikanRtData"));
+
+    public function printPDF(Request $request)
+    {
+        // Ambil identitasrt_id dari request
+        $identitasrt_id = $request->input('identitasrt_id');
+
+        // Cek apakah identitasrt_id ada di request
+        if ($identitasrt_id) {
+            // Jika ada, ambil data satu RT
+            $identitasRt = IdentitasRt::find($identitasrt_id);
+
+            // Jika data identitas RT tidak ditemukan, kembali ke halaman sebelumnya atau handle error
+            if (!$identitasRt) {
+                return redirect()->back()->with('error', 'Data identitas RT tidak ditemukan');
+            }
+
+            // Fetch data PendidikanRT untuk satu RT
+            $pendidikanrt = PendidikanRT::where('identitasrt_id', $identitasrt_id)->first();
+
+            // Jika data pendidikan tidak ditemukan, atur nilai default
+            if (!$pendidikanrt) {
+                // Buat objek kosong untuk pendidikan dengan nilai default
+                $pendidikanRtData = (object) [
+                    'identitasrt_id' => $identitasrt_id,
+                    'total' => 0,
+                    'tidak_tamat_sd' => 0,
+                    'tamat_sd' => 0,
+                    'tamat_smp' => 0,
+                    'tamat_sma' => 0,
+                    'tamat_perguruan_tinggi' => 0
+                ];
+            } else {
+                // Jika data pendidikan ditemukan, ambil data tersebut
+                $pendidikanRtData = $pendidikanrt;
+            }
+
+            $data = [
+                'pendidikanRtData' => $pendidikanRtData,
+                'identitasRt' => $identitasRt,
+                'now' => Carbon::now('Asia/Jakarta'),
+            ];
+
+            // Buat PDF untuk satu RT
+            $pdf = Pdf::loadView('frontend2.pendidikanrt.pdf_single', $data);
+        } else {
+            // Jika tidak ada identitasrt_id, ambil seluruh data RT
+            $identitasRts = IdentitasRt::all();
+            $pendidikanRts = PendidikanRT::whereIn('identitasrt_id', $identitasRts->pluck('id'))->get();
+
+            $data = [
+                'identitasRts' => $identitasRts,
+                'pendidikanRts' => $pendidikanRts,
+                'now' => Carbon::now('Asia/Jakarta'),
+            ];
+
+            // Buat PDF untuk seluruh RT
+            $pdf = Pdf::loadView('frontend2.pendidikanrt.pdf_all', $data);
+        }
+
+        // Kembalikan PDF sebagai response
+        return $pdf->download($identitasrt_id ? 'data_demografi_rt_' . $identitasrt_id . '.pdf' : 'data_demografi_seluruh_rt.pdf');
+    }
+
+    public function exportExcel(Request $request)
+    {
+        $identitasrt_id = $request->input('identitasrt_id');
+        return Excel::download(new PendidikanRTExport($identitasrt_id), 'data_demografi_rt.xlsx');
     }
 }

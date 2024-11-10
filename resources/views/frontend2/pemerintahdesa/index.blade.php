@@ -131,7 +131,7 @@
                         @include('frontend2.widget.sidebar.agenda')
                         @include('frontend2.widget.sidebar.kategori')
                         @include('frontend2.widget.sidebar.artikel_populer')
-                        @include('frontend2.widget.sidebar.arsip')
+                        @include('frontend2.widget.sidebar.pengunjung')
                     </div>
                     <!-- Sidebar -->
                 </div>
